@@ -116,3 +116,36 @@ bool PrimeAssistant::areIntegersCoprime(std::vector<int> v)
   std::cout << "################################" << std::endl;
   return true;
 }
+
+int PrimeAssistant::getGreatestCommonFactor(int a, int b)
+{
+  std::cout << "###############################" << std::endl;
+  std::cout << "#ENTER getGreatestCommonFactor#" << std::endl;
+  std::cout << "###############################" << std::endl;
+  std::map<int, int> primeFacA = getPrimeFactorization(a);
+  std::map<int, int> primeFacB = getPrimeFactorization(b);
+
+  int gcf = 1;
+
+  std::map<int, int>::iterator it;
+  for(it = primeFacA.begin(); it != primeFacA.end(); it++)
+  {
+    if(primeFacB.count(it->first) > 0)
+    {
+      int exponentOfCommonality;
+      if(primeFacB[it->first] > it->second)
+      {
+        exponentOfCommonality = it->second;
+      }
+      else
+      {
+        exponentOfCommonality = primeFacB[it->first];
+      }
+      gcf *= pow(it->first, exponentOfCommonality); 
+    }
+  }
+  std::cout << "###############################" << std::endl;
+  std::cout << "#EXIT  getGreatestCommonFactor#" << std::endl;
+  std::cout << "###############################" << std::endl;
+  return gcf;
+}
