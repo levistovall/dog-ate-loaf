@@ -53,13 +53,10 @@ std::map<int, int> PrimeAssistant::getPrimeFactorization(int n)
         quotient /= i;
         pf[i]++;
       }
-      std::cout << i << " : " << pf[i] << std::endl;
       greatestRemainingPossibleFactor = n / getProductFromFactors(pf);
-      std::cout << "greatest remaining possible factor: " << greatestRemainingPossibleFactor << std::endl;
       if(isPrimeInteger(greatestRemainingPossibleFactor))
       {
         pf[greatestRemainingPossibleFactor] = 1;
-        std::cout << greatestRemainingPossibleFactor << " : " << pf[greatestRemainingPossibleFactor] << std::endl;
         return pf;
       }
     }
@@ -117,7 +114,7 @@ bool PrimeAssistant::areIntegersCoprime(std::vector<int> v)
   return true;
 }
 
-int PrimeAssistant::getGreatestCommonFactor(int a, int b)
+/*int PrimeAssistant::getGreatestCommonFactor(int a, int b)
 {
   std::cout << "###############################" << std::endl;
   std::cout << "#ENTER getGreatestCommonFactor#" << std::endl;
@@ -148,4 +145,32 @@ int PrimeAssistant::getGreatestCommonFactor(int a, int b)
   std::cout << "#EXIT  getGreatestCommonFactor#" << std::endl;
   std::cout << "###############################" << std::endl;
   return gcf;
+}*/
+
+int PrimeAssistant::getGreatestCommonFactor(int a, int b)
+{
+  int lesserInt;
+  if(a > b)
+  {
+    lesserInt = b;
+  }
+  else
+  {
+    lesserInt = a;
+  }
+  int gcf = lesserInt;
+  int i = 2;
+  while(gcf > 1)
+  {
+    if((a % gcf == 0) && (b % gcf == 0))
+    {
+      return gcf;
+    }
+    else
+    {
+      gcf = lesserInt / i;
+      i++; 
+    }
+  }
+  return 1;
 }

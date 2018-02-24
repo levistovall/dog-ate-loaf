@@ -13,8 +13,10 @@ int main(int argc, char *argv[])
    a->push_back(6);
    bool coprime = PrimeAssistant::areIntegersCoprime(*a);*/
 
-   int gcf = PrimeAssistant::getGreatestCommonFactor(667, 41);
-   std::cout << "The GCF of 667 and 41 is " << gcf << std::endl;
+   int a = 96;
+   int b = 120;
+   int gcf = PrimeAssistant::getGreatestCommonFactor(a, b);
+   std::cout << "The GCF of " << a << " and " << b << " is " << gcf << std::endl;
 
    bool keepGoing = true;
    int n;
