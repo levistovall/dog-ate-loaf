@@ -15,6 +15,7 @@ public:
   static bool isIntegerPairCoprime(int a, int b);
   static bool areIntegersCoprime(std::vector<int> v);
   static int  getGreatestCommonFactor(int a, int b);
+  static int  getLeastCommonMultiple(int a, int b);
 };
 
 #endif
