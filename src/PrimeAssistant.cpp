@@ -88,33 +88,22 @@ bool PrimeAssistant::isIntegerPairCoprime(int a, int b)
 
 bool PrimeAssistant::areIntegersCoprime(std::vector<int> v)
 {
-  std::cout << "##########################" << std::endl;
-  std::cout << "#ENTER areIntegersCoprime#" << std::endl;
-  std::cout << "##########################" << std::endl;
   std::vector<int>::iterator it1;
   for(it1 = v.begin(); it1 != v.end(); it1++)
   {
-    std::cout << "Checking " << *it1 << std::endl;
     std::vector<int>::iterator it2;
     for(it2 = it1 + 1; it2 != v.end(); it2++)
     {
-      std::cout << " for coprimality with " << *it2 << std::endl;
       if(!isIntegerPairCoprime(*it1, *it2))
       {
-        std::cout << "################################" << std::endl;
-        std::cout << "#ENTER areIntegersCoprime false#" << std::endl;
-        std::cout << "################################" << std::endl;
         return false;
       }
     }
   }
-  std::cout << "################################" << std::endl;
-  std::cout << "#ENTER areIntegersCoprime  true#" << std::endl;
-  std::cout << "################################" << std::endl;
   return true;
 }
 
-int PrimeAssistant::getGreatestCommonFactor(int a, int b)
+int PrimeAssistant::getGcfOfIntegerPair(int a, int b)
 {
   int lesserInt;
   if(a > b)
@@ -142,4 +131,55 @@ int PrimeAssistant::getGreatestCommonFactor(int a, int b)
   return 1;
 }
 
+int PrimeAssistant::getGcfOfIntegers(std::vector<int> v)
+{
+  std::vector<int>::iterator it = v.begin();
+  int leastInteger = *it;
+  for(it = v.begin() + 1; it != v.end(); it++)
+  {
+    if(leastInteger > *it)
+    {
+      leastInteger = *it;
+    }
+  }
 
+  int gcf = leastInteger;
+
+  for(it = v.begin(); it != v.end(); it++)
+  {
+    if(*it > leastInteger)
+    {
+      gcf = getGcfOfIntegerPair(gcf, *it);
+    }
+  }
+  return gcf;
+}
+
+int PrimeAssistant::getLcmOfIntegerPair(int a, int b)
+{
+  int gcf = getGcfOfIntegerPair(a, b);
+  return (gcf * (a / gcf) * (b / gcf));
+}
+
+int PrimeAssistant::getLcmOfIntegers(std::vector<int> v)
+{
+  std::map<int, int> allFactorsOfLcm;
+  std::map<int, int> primeFacOfCurrent; 
+  std::vector<int>::iterator it1;
+  std::map<int, int>::iterator it2;
+  for(it1 = v.begin(); it1 != v.end(); it1++)
+  {
+    primeFacOfCurrent = getPrimeFactorization(*it1);
+    for(it2  = primeFacOfCurrent.begin(); 
+        it2 != primeFacOfCurrent.end();
+        it2++)
+    {
+      if((allFactorsOfLcm.count(it2->first) == 0) ||
+         (allFactorsOfLcm[it2->first] < it2->second))
+      {
+        allFactorsOfLcm[it2->first] = it2->second;
+      }
+    }
+  }
+  return getProductFromFactors(allFactorsOfLcm);
+}
