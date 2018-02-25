@@ -1,6 +1,11 @@
 #ifndef RATIONAL_H_
 #define RATIONAL_H_
 
+#include <map>
+#include <vector>
+#include <math.h>
+#include "PrimeAssistant.h"
+
 class Rational
 {
 public:

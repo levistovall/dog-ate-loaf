@@ -1,3 +1,5 @@
+#include "Rational.h"
+
 Rational::Rational(int _numerator, int _denominator)
 {
   if(_denominator == 0)
@@ -5,9 +7,9 @@ Rational::Rational(int _numerator, int _denominator)
     /*
      * TODO: fix this so it makes sense
      */
-    return 0;
   }
-
+  else
+  {
   //this->numerator   = _numerator;
   //this->denominator = _denominator;
 
@@ -16,7 +18,7 @@ Rational::Rational(int _numerator, int _denominator)
   std::map<int,int>::iterator it;
   for(it = primeFacDenom.begin(); it != primeFacDenom.end(); it++)
   {
-    if((primeFac.count(it->first) > 0)  
+    if(primeFac.count(it->first) > 0)  
     {
       if(primeFac[it->first] != it->second)
       {
@@ -29,14 +31,14 @@ Rational::Rational(int _numerator, int _denominator)
     }
     else
     {
-      primeFac[it-first] = -1 * it->second;
+      primeFac[it->first] = -1 * it->second;
     }
   }
 
 
   this->numerator   = 1;
   this->denominator = 1;
-  for(it = primeFac.begin(); it != primeFac.end(); i++)
+  for(it = primeFac.begin(); it != primeFac.end(); it++)
   {
     if(it->second > 0)
     {
@@ -46,6 +48,7 @@ Rational::Rational(int _numerator, int _denominator)
     {
       this->denominator *= it->first;
     }
+  }
   }
 }
 
@@ -82,7 +85,7 @@ int Rational::toInteger();
 {
   return numerator / denominator;
 }
-
+/*
 Rational Rational::operator+(const Rational &r)
 {
   
@@ -113,7 +116,7 @@ bool     Rational::operator==(const double &d);
 bool     Rational::operator!=(const Rational &r); 
 bool     Rational::operator!=(const float &f); 
 bool     Rational::operator!=(const double &d); 
-
+*/
 int      numerator;
 int      denominator;
 
