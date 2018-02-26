@@ -4,69 +4,80 @@ Rational::Rational(int _numerator, int _denominator)
 {
   if(_denominator == 0)
   {
-    /*
-     * TODO: fix this so it makes sense
-     */
+    throw division_by_zero_exception();
   }
   else
   {
-  //this->numerator   = _numerator;
-  //this->denominator = _denominator;
-
-  this->primeFac = PrimeAssistant::getPrimeFactorization(_numerator);
-  std::map<int, int> primeFacDenom = PrimeAssistant::getPrimeFactorization(_denominator);
-  std::map<int,int>::iterator it;
-  for(it = primeFacDenom.begin(); it != primeFacDenom.end(); it++)
-  {
-    if(primeFac.count(it->first) > 0)  
+    this->primeFac = PrimeAssistant::getPrimeFactorization(_numerator);
+    std::map<int, int> primeFacDenom = PrimeAssistant::getPrimeFactorization(_denominator);
+    std::map<int,int>::iterator it;
+    for(it = primeFacDenom.begin(); it != primeFacDenom.end(); it++)
     {
-      if(primeFac[it->first] != it->second)
+      if(primeFac.count(it->first) > 0)  
       {
-        primeFac.erase(it->first);
+        if(primeFac[it->first] == it->second)
+        {
+          primeFac.erase(it->first);
+        }
+        else
+        {
+          primeFac[it->first] -= it->second;
+        }
       }
       else
       {
-        primeFac[it->first] -= it->second;
+        primeFac[it->first] = -1 * it->second;
       }
     }
-    else
+  
+    this->numerator   = 1;
+    this->denominator = 1;
+    for(it = primeFac.begin(); it != primeFac.end(); it++)
     {
-      primeFac[it->first] = -1 * it->second;
+      if(it->second > 0)
+      {
+        for(int i = 0; i < it->second; i++)
+        {
+          this->numerator *= it->first;
+        }
+      }
+      else
+      {
+        for(int i = 0; i < (-1 * it->second); i++)
+        {
+          this->denominator *= it->first;
+        }
+      }
     }
-  }
-
-
-  this->numerator   = 1;
-  this->denominator = 1;
-  for(it = primeFac.begin(); it != primeFac.end(); it++)
-  {
-    if(it->second > 0)
-    {
-      this->numerator *= it->first;
-    }
-    else
-    {
-      this->denominator *= it->first;
-    }
-  }
   }
 }
 
-Rational::~Rational();
+/*
+ * Intentional empty destructor.
+ */
+Rational::~Rational(){}
 
-Rational::getNumerator()
+int Rational::getNumerator()
 {
   return this->numerator;
 }
 
-Rational::getDenominator()
+int Rational::getDenominator()
 {
   return this->denominator;
 }
 
-Rational::getPrimeFac() const
+const std::map<int, int> & Rational::getPrimeFac()
 {
   return this->primeFac; 
+}
+
+std::string Rational::toString()
+{
+  std::stringstream ss;
+  ss << "(" << this->numerator   << "/" 
+             << this->denominator << ")";
+  return ss.str();
 }
 
 double Rational::toDouble()
@@ -75,13 +86,13 @@ double Rational::toDouble()
           static_cast<double>(denominator));
 }
 
-float Rational::toFloat();
+float Rational::toFloat()
 {
   return (static_cast<float>(numerator) +
           static_cast<float>(denominator));
 }
 
-int Rational::toInteger();
+int Rational::toInteger()
 {
   return numerator / denominator;
 }

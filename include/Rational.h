@@ -4,7 +4,10 @@
 #include <map>
 #include <vector>
 #include <math.h>
+#include <string.h>
+#include <sstream>
 #include "PrimeAssistant.h"
+#include "division_by_zero_exception.h"
 
 class Rational
 {
@@ -12,10 +15,12 @@ public:
   Rational(int _numerator = 1, int _denominator = 1);
   virtual ~Rational();
 
-  int       & getNumerator();
-  int const & getDenominator();
+  int getNumerator();
+  int getDenominator();
 
-  std::map<int, int> const & getPrimeFac();
+  const std::map<int, int> & getPrimeFac();
+
+  std::string toString();
 
   double   toDouble();
   float    toFloat();

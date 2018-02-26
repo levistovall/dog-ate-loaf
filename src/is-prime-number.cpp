@@ -2,6 +2,8 @@
 #include <string.h>
 #include <sstream>
 #include "PrimeAssistant.h"
+#include "Rational.h"
+#include "division_by_zero_exception.h"
 
 int main(int argc, char *argv[])
 {
@@ -35,6 +37,19 @@ int main(int argc, char *argv[])
    int lcm = PrimeAssistant::getLcmOfIntegerPair(a, b);
    std::cout << "The GCF of " << a << " and " << b << " is " << gcf << std::endl;
    std::cout << "The LCM of " << a << " and " << b << " is " << lcm << std::endl;
+
+   Rational *r = new Rational(48, 36);
+   std::cout << "Here's a rational: " << r->toString() << std::endl;
+
+   try
+   {
+      Rational *r = new Rational(48, 0);
+      std::cout << "Here's a rational: " << r->toString() << std::endl;
+   }
+   catch(division_by_zero_exception& e)
+   {
+      std::cout << e.what() << std::endl;
+   }
 
    bool keepGoing = true;
    int n;

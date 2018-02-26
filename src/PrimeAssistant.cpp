@@ -34,6 +34,7 @@ int PrimeAssistant::getProductFromFactors(std::map<int, int> primeFac)
 
 std::map<int, int> PrimeAssistant::getPrimeFactorization(int n)
 {
+  std::cout << "Getting prime factorization of " << n << std::endl;
   std::map<int, int> pf;
   if(isPrimeInteger(n))
   {
