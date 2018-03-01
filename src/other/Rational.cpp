@@ -82,13 +82,13 @@ std::string Rational::toString()
 
 double Rational::toDouble()
 {
-  return (static_cast<double>(numerator) +
+  return (static_cast<double>(numerator) /
           static_cast<double>(denominator));
 }
 
 float Rational::toFloat()
 {
-  return (static_cast<float>(numerator) +
+  return (static_cast<float>(numerator) /
           static_cast<float>(denominator));
 }
 
@@ -99,8 +99,17 @@ int Rational::toInteger()
 /*
 Rational Rational::operator+(const Rational &r)
 {
-  
+  int sumDenominator = 
+        PrimeAssistant::getLcmOfIntegerPair(this->denominator,
+                                            r.getDenominator());
+  balanceFactorForThisNumerator  = sumDenominator / this->denominator;
+  balanceFactorForOtherNumerator = sumDenominator / r.getDenominator();
+  int sumNumerator = this->numerator  * balanceFactorForThisNumerator +
+                     r.getNumerator() * balanceFactorForOtherNumerator;
+  Rational sum(sumNumerator, sumDenominator);
+  return sum;
 }
+
 float    Rational::operator+(const float  &f);
 double   Rational::operator+(const double &d);
 

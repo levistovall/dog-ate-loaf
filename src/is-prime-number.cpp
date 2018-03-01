@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[])
 {
-   std::vector<int> *v = new std::vector<int>;
+   /*std::vector<int> *v = new std::vector<int>;
    v->push_back(24);
    v->push_back(36);
    v->push_back(54);
@@ -37,14 +37,16 @@ int main(int argc, char *argv[])
    int lcm = PrimeAssistant::getLcmOfIntegerPair(a, b);
    std::cout << "The GCF of " << a << " and " << b << " is " << gcf << std::endl;
    std::cout << "The LCM of " << a << " and " << b << " is " << lcm << std::endl;
-
-   Rational *r = new Rational(48, 36);
-   std::cout << "Here's a rational: " << r->toString() << std::endl;
-
+*/
+   Rational r(48, 36);
+   std::cout << "Here's a rational: " << r.toString() << std::endl;
+   std::cout << " now as double: " << r.toDouble() << std::endl;
+   std::cout << " now as float: " << r.toFloat() << std::endl;
+   std::cout << " now as int: " << r.toInteger() << std::endl;
+   //delete r;
    try
    {
-      Rational *r = new Rational(48, 0);
-      std::cout << "Here's a rational: " << r->toString() << std::endl;
+      Rational *q = new Rational(48, 0);
    }
    catch(division_by_zero_exception& e)
    {
