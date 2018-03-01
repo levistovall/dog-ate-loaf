@@ -57,12 +57,12 @@ Rational::Rational(int _numerator, int _denominator)
  */
 Rational::~Rational(){}
 
-int Rational::getNumerator()
+int Rational::getNumerator() const
 {
   return this->numerator;
 }
 
-int Rational::getDenominator()
+int Rational::getDenominator() const
 {
   return this->denominator;
 }
@@ -96,28 +96,50 @@ int Rational::toInteger()
 {
   return numerator / denominator;
 }
-/*
+
 Rational Rational::operator+(const Rational &r)
 {
   int sumDenominator = 
         PrimeAssistant::getLcmOfIntegerPair(this->denominator,
                                             r.getDenominator());
-  balanceFactorForThisNumerator  = sumDenominator / this->denominator;
-  balanceFactorForOtherNumerator = sumDenominator / r.getDenominator();
+  int balanceFactorForThisNumerator  = sumDenominator / this->denominator;
+  int balanceFactorForOtherNumerator = sumDenominator / r.getDenominator();
   int sumNumerator = this->numerator  * balanceFactorForThisNumerator +
                      r.getNumerator() * balanceFactorForOtherNumerator;
   Rational sum(sumNumerator, sumDenominator);
   return sum;
 }
 
-float    Rational::operator+(const float  &f);
-double   Rational::operator+(const double &d);
+float    Rational::operator+(const float  &f)
+{
+  return (this->toFloat() + f);
+}
 
-Rational Rational::operator-(const Rational &r);
+double   Rational::operator+(const double &d)
+{
+  return (this->toDouble() + d);
+}
+
+Rational Rational::operator-(const Rational &r)
+{
+  return *this + (-1 * r);
+}
+/*
 float    Rational::operator-(const float &f);
 double   Rational::operator-(const double &d);
-
-Rational Rational::operator*(const Rational &r);
+*/
+Rational Rational::operator*(const Rational &r)
+{
+  Rational product(this->numerator   * r.getNumerator(), 
+                   this->denominator * r.getDenominator());
+  return product;
+}
+Rational Rational::operator*(const int &i)
+{
+  Rational product(this->numerator * i, this->denominator);
+  return product;
+}
+/*
 float    Rational::operator*(const float &f);
 double   Rational::operator*(const double &d);
 

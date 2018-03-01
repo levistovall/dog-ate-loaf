@@ -36,7 +36,11 @@ std::map<int, int> PrimeAssistant::getPrimeFactorization(int n)
 {
   std::cout << "Getting prime factorization of " << n << std::endl;
   std::map<int, int> pf;
-  if(isPrimeInteger(n))
+  if(n < 0)
+  {
+    pf[-1] = 1;
+  }
+  if(isPrimeInteger(n) || isPrimeInteger(-1*n))
   {
     pf[n] = 1;
     return pf;

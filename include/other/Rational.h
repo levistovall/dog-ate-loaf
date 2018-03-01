@@ -15,8 +15,8 @@ public:
   Rational(int _numerator = 1, int _denominator = 1);
   virtual ~Rational();
 
-  int getNumerator();
-  int getDenominator();
+  int getNumerator() const;
+  int getDenominator() const;
 
   const std::map<int, int> & getPrimeFac();
 
@@ -27,18 +27,22 @@ public:
   int      toInteger();
 
   Rational operator+(const Rational &r);
+  Rational operator+(const int &i);
   float    operator+(const float &f);
   double   operator+(const double &d);
 
   Rational operator-(const Rational &r);
+  Rational operator-(const int &i);
   float    operator-(const float &f);
   double   operator-(const double &d);
 
   Rational operator*(const Rational &r);
+  Rational operator*(const int &i);
   float    operator*(const float &f);
   double   operator*(const double &d);
 
   Rational operator/(const Rational &r);
+  Rational operator/(const int &i);
   float    operator/(const float &f);
   double   operator/(const double &d);
 

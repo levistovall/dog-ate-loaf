@@ -39,10 +39,12 @@ int main(int argc, char *argv[])
    std::cout << "The LCM of " << a << " and " << b << " is " << lcm << std::endl;
 */
    Rational r(48, 36);
-   std::cout << "Here's a rational: " << r.toString() << std::endl;
-   std::cout << " now as double: " << r.toDouble() << std::endl;
-   std::cout << " now as float: " << r.toFloat() << std::endl;
-   std::cout << " now as int: " << r.toInteger() << std::endl;
+   Rational s(40, 100);
+   std::cout << "Here's a couple of rationals: " << r.toString() << ", " << s.toString() << std::endl;
+   std::cout << " now as double: " << r.toDouble() << ", " << s.toDouble() << std::endl;
+   std::cout << " now as float: " << r.toFloat() << ", " << s.toFloat() << std::endl;
+   std::cout << " now as int: " << r.toInteger() << ", " << s.toInteger() << std::endl;
+   std::cout << " and the sum: " << (r+s).toString() << std::endl;
    //delete r;
    try
    {
