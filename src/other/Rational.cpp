@@ -8,48 +8,9 @@ Rational::Rational(int _numerator, int _denominator)
   }
   else
   {
-    this->primeFac = PrimeAssistant::getPrimeFactorization(_numerator);
-    std::cout << "calling getPF on denom in Rational constructor. " << std::endl;
-    std::map<int, int> primeFacDenom = PrimeAssistant::getPrimeFactorization(_denominator);
-    std::map<int,int>::iterator it;
-    for(it = primeFacDenom.begin(); it != primeFacDenom.end(); it++)
-    {
-      if(primeFac.count(it->first) > 0)  
-      {
-        if(primeFac[it->first] == it->second)
-        {
-          primeFac.erase(it->first);
-        }
-        else
-        {
-          primeFac[it->first] -= it->second;
-        }
-      }
-      else
-      {
-        primeFac[it->first] = -1 * it->second;
-      }
-    }
-  
-    this->numerator   = 1;
-    this->denominator = 1;
-    for(it = primeFac.begin(); it != primeFac.end(); it++)
-    {
-      if(it->second > 0)
-      {
-        for(int i = 0; i < it->second; i++)
-        {
-          this->numerator *= it->first;
-        }
-      }
-      else
-      {
-        for(int i = 0; i < (-1 * it->second); i++)
-        {
-          this->denominator *= it->first;
-        }
-      }
-    }
+    int gcf = PrimeAssistant::getGcfOfIntegerPair(_numerator, _denominator);
+    this->numerator   = _numerator / gcf;
+    this->denominator = _denominator / gcf;
   }
 }
 
@@ -68,9 +29,18 @@ int Rational::getDenominator() const
   return this->denominator;
 }
 
-const std::map<int, int> & Rational::getPrimeFac()
+/*const double& Rational::getTol() const
 {
-  return this->primeFac; 
+  return Rational::tol;
+}*/
+
+std::map<int, int> Rational::getPrimeFac() const
+{
+  std::map<int,int> primeFacNumer = 
+                      PrimeAssistant::getPrimeFactorization(this->numerator);
+  std::map<int,int> primeFacDenom = 
+                      PrimeAssistant::getPrimeFactorization(this->denominator);
+  return PrimeAssistant::subtractPrimeFacs(primeFacNumer, primeFacDenom); 
 }
 
 std::string Rational::toString() const
@@ -99,7 +69,8 @@ int Rational::toInteger() const
 }
 
 /*
- * The operators follow, and are not member functions.
+ * The arithmetic and comparison operators follow,
+ * and are not member functions.
  */
 Rational operator+(const Rational &r, const Rational &q)
 {
@@ -130,47 +101,190 @@ float operator+(const Rational &r, const float &f)
   return (r.toFloat() + f);
 }
 
+float operator+(const float &f, const Rational &r)
+{
+  return (r + f);
+}
+
 double operator+(const Rational &r, const double &d)
 {
   return (r.toDouble() + d);
 }
-/*
+
+double operator+(const double &d, const Rational &r)
+{
+  return (r + d);
+}
+
 Rational operator-(const Rational &r, const Rational &q)
 {
   return (r + (-1 * q));
 }
 
-float    operator-(const float &f);
-double   operator-(const double &d);
-*/
+float operator-(const Rational &r, const float &f)
+{
+  return (r + (-1 * f));
+}
+
+float operator-(const float &f, const Rational &r)
+{
+  return (f + (-1 * r));
+}
+
+double operator-(const Rational &r, const double &d)
+{
+  return (r + (-1 * d));
+}
+
+double operator-(const double &d, const Rational &r)
+{
+  return (d + (-1 * r));
+}
+
 Rational operator*(const Rational &r, const Rational &q)
 {
   Rational product(r.getNumerator()   * q.getNumerator(), 
                    r.getDenominator() * q.getDenominator());
   return product;
 }
+
 Rational operator*(const Rational &r, const int &i)
 {
-  Rational product(r.getNumerator() * i, r.getDenominator());
+  Rational product((r.getNumerator() * i), r.getDenominator());
   return product;
 }
-/*
-float    operator*(const float &f);
-double   operator*(const double &d);
 
-Rational operator/(const Rational &r);
-float    operator/(const float &f);
-double   operator/(const double &d);
+Rational operator*(const int &i, const Rational &r)
+{
+  return (r * i);
+}
 
-Rational operator=(const Rational &r);
-float    operator=(const float &f);
-double   operator=(const double &d);
+float operator*(const Rational &r, const float &f)
+{
+  return (r.toFloat() * f);
+}
 
-bool     operator==(const Rational &r); 
-bool     operator==(const float &f); 
-bool     operator==(const double &d); 
+float operator*(const float &f, const Rational &r)
+{
+  return (r * f);
+}
 
-bool     operator!=(const Rational &r); 
-bool     operator!=(const float &f); 
-bool     operator!=(const double &d); 
-*/
+double operator*(const Rational &r, const double &d)
+{
+  return (r.toDouble() * d);
+}
+
+double operator*(const double &d, const Rational &r)
+{
+  return (r * d);
+}
+
+Rational operator/(const Rational &r, const Rational &q)
+{
+  Rational quotient((r.getNumerator()   * q.getDenominator()),
+                    (r.getDenominator() * q.getNumerator()));
+  return quotient;
+}
+
+Rational operator/(const Rational &r, const int &i)
+{
+  Rational intAsRational(i, 1);
+  return (r / intAsRational);
+}
+
+Rational operator/(const int &i, const Rational &r)
+{
+  Rational intAsRational(i, 1);
+  return (intAsRational / r);
+}
+
+float operator/(const Rational &r, const float &f)
+{
+  return (r.toFloat() / f);
+}
+
+float operator/(const float &f, const Rational &r)
+{
+  return (f / r.toFloat());
+}
+
+double operator/(const Rational &r, const double &d)
+{
+  return (r.toDouble() / d);
+}
+
+double operator/(const double &d, const Rational &r)
+{
+  return (d / r.toDouble());
+}
+
+bool operator==(const Rational &r, const Rational &q)
+{
+  return ((r.getNumerator()   == q.getNumerator()) &&
+          (r.getDenominator() == q.getDenominator()));
+}
+
+bool operator==(const Rational &r, const int &i)
+{
+  return ((r.getNumerator() == i) && (r.getDenominator() == 1));
+}
+
+bool operator==(const int &i, const Rational &r)
+{
+  return (r == i);
+}
+
+bool operator==(const Rational &r, const float &f)
+{
+  return (std::abs(r.toFloat() - f) < Rational::tol);
+}
+
+bool operator==(const float &f, const Rational &r)
+{
+  return (r == f);
+}
+
+bool operator==(const Rational &r, const double &d)
+{
+  return (std::abs(r.toDouble() - d) < Rational::tol);
+}
+
+bool operator==(const double &d, const Rational &r)
+{
+  return (r == d);
+}
+
+bool operator!=(const Rational &r, const Rational &q)
+{
+  return !(r == q);
+}
+
+bool operator!=(const Rational &r, const int &i)
+{
+  return !(r == i);
+}
+
+bool operator!=(const int &i, const Rational &r)
+{
+  return !(r == i);
+}
+
+bool operator!=(const Rational &r, const float &f)
+{
+  return !(r == f);
+}
+
+bool operator!=(const float &f, const Rational &r)
+{
+  return !(r == f);
+}
+
+bool operator!=(const Rational &r, const double &d)
+{
+  return !(r == d);
+}
+
+bool operator!=(const double &d, const Rational &r)
+{
+  return !(r == d);
+}
