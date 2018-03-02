@@ -20,43 +20,12 @@ public:
 
   const std::map<int, int> & getPrimeFac();
 
-  std::string toString();
+  std::string toString() const;
 
-  double   toDouble();
-  float    toFloat();
-  int      toInteger();
+  double   toDouble() const;
+  float    toFloat() const;
+  int      toInteger() const;
 
-  Rational operator+(const Rational &r);
-  Rational operator+(const int &i);
-  float    operator+(const float &f);
-  double   operator+(const double &d);
-
-  Rational operator-(const Rational &r);
-  Rational operator-(const int &i);
-  float    operator-(const float &f);
-  double   operator-(const double &d);
-
-  Rational operator*(const Rational &r);
-  Rational operator*(const int &i);
-  float    operator*(const float &f);
-  double   operator*(const double &d);
-
-  Rational operator/(const Rational &r);
-  Rational operator/(const int &i);
-  float    operator/(const float &f);
-  double   operator/(const double &d);
-
-  Rational operator=(const Rational &r);
-  float    operator=(const float &f);
-  double   operator=(const double &d);
-
-  bool     operator==(const Rational &r); 
-  bool     operator==(const float &f); 
-  bool     operator==(const double &d); 
-
-  bool     operator!=(const Rational &r); 
-  bool     operator!=(const float &f); 
-  bool     operator!=(const double &d); 
 
 private:
   int      numerator;
@@ -64,5 +33,93 @@ private:
 
   std::map<int,int> primeFac;
 };
+
+Rational operator+(const Rational &r, const Rational &q);
+Rational operator+(const Rational &r, const int      &i);
+Rational operator+(const int &i,      const Rational &r);
+float    operator+(const Rational &r, const float    &f);
+float    operator+(const float &f,    const Rational &r);
+double   operator+(const Rational &r, const double   &d);
+double   operator+(const double &d,   const Rational &r);
+
+Rational operator-(const Rational &r, const Rational &q);
+Rational operator-(const Rational &r, const int      &i);
+Rational operator-(const int      &i, const Rational &r);
+float    operator-(const Rational &r, const float    &f);
+float    operator-(const float    &f, const Rational &r);
+double   operator-(const Rational &r, const double   &d);
+double   operator-(const double   &d, const Rational &r);
+
+Rational operator*(const Rational &r, const Rational &q);
+Rational operator*(const Rational &r, const int      &i);
+Rational operator*(const int      &i, const Rational &r);
+float    operator*(const Rational &r, const float    &f);
+float    operator*(const float    &f, const Rational &r);
+double   operator*(const Rational &r, const double   &d);
+double   operator*(const double   &d, const Rational &r);
+
+Rational operator/(const Rational &r, const Rational &q);
+Rational operator/(const Rational &r, const int      &i);
+Rational operator/(const int      &i, const Rational &r);
+float    operator/(const Rational &r, const float    &f);
+float    operator/(const float    &f, const Rational &r);
+double   operator/(const Rational &r, const double   &d);
+double   operator/(const double   &d, const Rational &r);
+
+/*Rational operator=(const Rational &r, const Rational &q);
+Rational operator=(const Rational &r, const int      &i);
+Rational operator=(const int      &i, const Rational &r);
+float    operator=(const Rational &r, const float    &f);
+float    operator=(const float    &f, const Rational &r);
+double   operator=(const Rational &r, const double   &d);
+double   operator=(const double   &d, const Rational &r);
+*/
+bool     operator==(const Rational &r, const Rational &q); 
+bool     operator==(const Rational &r, const int      &i); 
+bool     operator==(const int      &i, const Rational &r); 
+bool     operator==(const Rational &r, const float    &f); 
+bool     operator==(const float    &f, const Rational &r); 
+bool     operator==(const Rational &r, const double   &d); 
+bool     operator==(const double   &d, const Rational &r); 
+
+bool     operator!=(const Rational &r, const Rational &q); 
+bool     operator!=(const Rational &r, const int      &i); 
+bool     operator!=(const int      &i, const Rational &r); 
+bool     operator!=(const Rational &r, const float    &f); 
+bool     operator!=(const float    &f, const Rational &r); 
+bool     operator!=(const Rational &r, const double   &d); 
+bool     operator!=(const double   &d, const Rational &r); 
+
+bool     operator<=(const Rational &r, const Rational &q); 
+bool     operator<=(const Rational &r, const int      &i); 
+bool     operator<=(const int      &i, const Rational &r); 
+bool     operator<=(const Rational &r, const float    &f); 
+bool     operator<=(const float    &f, const Rational &r); 
+bool     operator<=(const Rational &r, const double   &d); 
+bool     operator<=(const double   &d, const Rational &r); 
+
+bool     operator>=(const Rational &r, const Rational &q); 
+bool     operator>=(const Rational &r, const int      &i); 
+bool     operator>=(const int      &i, const Rational &r); 
+bool     operator>=(const Rational &r, const float    &f); 
+bool     operator>=(const float    &f, const Rational &r); 
+bool     operator>=(const Rational &r, const double   &d); 
+bool     operator>=(const double   &d, const Rational &r); 
+
+bool     operator<(const Rational &r, const Rational &q); 
+bool     operator<(const Rational &r, const int      &i); 
+bool     operator<(const int      &i, const Rational &r); 
+bool     operator<(const Rational &r, const float    &f); 
+bool     operator<(const float    &f, const Rational &r); 
+bool     operator<(const Rational &r, const double   &d); 
+bool     operator<(const double   &d, const Rational &r); 
+
+bool     operator>(const Rational &r, const Rational &q); 
+bool     operator>(const Rational &r, const int      &i); 
+bool     operator>(const int      &i, const Rational &r); 
+bool     operator>(const Rational &r, const float    &f); 
+bool     operator>(const float    &f, const Rational &r); 
+bool     operator>(const Rational &r, const double   &d); 
+bool     operator>(const double   &d, const Rational &r); 
 
 #endif

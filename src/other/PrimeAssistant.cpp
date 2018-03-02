@@ -40,7 +40,7 @@ std::map<int, int> PrimeAssistant::getPrimeFactorization(int n)
   {
     pf[-1] = 1;
   }
-  if(isPrimeInteger(n) || isPrimeInteger(-1*n))
+  if(isPrimeInteger(n) || isPrimeInteger(-1*n) || n*n == 1)
   {
     pf[n] = 1;
     return pf;

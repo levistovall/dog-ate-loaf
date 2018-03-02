@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
    std::cout << " now as float: " << r.toFloat() << ", " << s.toFloat() << std::endl;
    std::cout << " now as int: " << r.toInteger() << ", " << s.toInteger() << std::endl;
    std::cout << " and the sum: " << (r+s).toString() << std::endl;
+   std::cout << " and the sum: " << (r+1).toString() << std::endl;
    //delete r;
    try
    {
