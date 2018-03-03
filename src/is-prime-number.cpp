@@ -48,14 +48,14 @@ int main(int argc, char *argv[])
    std::cout << " and the sum: " << (r+s).toString() << std::endl;
    std::cout << " and the sum: " << (r+1).toString() << std::endl;
    //delete r;
-//   try
-//   {
+   try
+   {
       Rational *q = new Rational(48, 0);
-//   }
-//   catch(division_by_zero_exception& e)
-//   {
-//      std::cout << e.what() << std::endl;
-//   }
+   }
+   catch(division_by_zero_exception& e)
+   {
+      std::cout << e.what() << std::endl;
+   }
 
    bool keepGoing = true;
    int n;
