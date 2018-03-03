@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 */
    Rational r(48, 36);
    Rational s(40, 100);
+   s -= r;
    std::cout << "Here's a couple of rationals: " << r.toString() << ", " << s.toString() << std::endl;
    std::cout << " now as double: " << r.toDouble() << ", " << s.toDouble() << std::endl;
    std::cout << " now as float: " << r.toFloat() << ", " << s.toFloat() << std::endl;
@@ -47,14 +48,14 @@ int main(int argc, char *argv[])
    std::cout << " and the sum: " << (r+s).toString() << std::endl;
    std::cout << " and the sum: " << (r+1).toString() << std::endl;
    //delete r;
-   try
-   {
+//   try
+//   {
       Rational *q = new Rational(48, 0);
-   }
-   catch(division_by_zero_exception& e)
-   {
-      std::cout << e.what() << std::endl;
-   }
+//   }
+//   catch(division_by_zero_exception& e)
+//   {
+//      std::cout << e.what() << std::endl;
+//   }
 
    bool keepGoing = true;
    int n;

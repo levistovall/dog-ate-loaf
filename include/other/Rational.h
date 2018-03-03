@@ -28,6 +28,18 @@ public:
 
   static const double tol = 1e-10;  
 
+  Rational operator+=(const Rational &r);
+  Rational operator+=(const int      &i);
+
+  Rational operator-=(const Rational &r);
+  Rational operator-=(const int      &i);
+
+  Rational operator*=(const Rational &r);
+  Rational operator*=(const int      &i);
+
+  Rational operator/=(const Rational &r);
+  Rational operator/=(const int      &i);
+
 private:
   int numerator;
   int denominator;

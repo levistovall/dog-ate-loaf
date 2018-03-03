@@ -68,6 +68,54 @@ int Rational::toInteger() const
   return numerator / denominator;
 }
 
+Rational Rational::operator+=(const Rational &r)
+{
+  *this = *this + r;
+  return *this;
+}
+
+Rational Rational::operator+=(const int &i)
+{
+  *this = *this + i;
+  return *this;
+}
+
+Rational Rational::operator-=(const Rational &r)
+{
+  *this = *this - r;
+  return *this;
+}
+
+Rational Rational::operator-=(const int &i)
+{
+  *this = *this - i;
+  return *this;
+}
+
+Rational Rational::operator*=(const Rational &r)
+{
+  *this = *this * r;
+  return *this;
+}
+
+Rational Rational::operator*=(const int &i)
+{
+  *this = *this * i;
+  return *this;
+}
+
+Rational Rational::operator/=(const Rational &r)
+{
+  *this = *this / r;
+  return *this;
+}
+
+Rational Rational::operator/=(const int &i)
+{
+  *this = *this / i;
+  return *this;
+}
+
 /*
  * The arithmetic and comparison operators follow,
  * and are not member functions.
@@ -119,6 +167,18 @@ double operator+(const double &d, const Rational &r)
 Rational operator-(const Rational &r, const Rational &q)
 {
   return (r + (-1 * q));
+}
+
+Rational operator-(const Rational &r, const int  &i)
+{
+  Rational intAsRational(i, 1);
+  return (r - intAsRational);
+}
+
+Rational operator-(const int  &i, const Rational &r)
+{
+  Rational intAsRational(i, 1);
+  return (intAsRational - r);
 }
 
 float operator-(const Rational &r, const float &f)
