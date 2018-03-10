@@ -26,7 +26,6 @@ int PrimeAssistant::getProductFromFactors(const std::map<int,int> &primeFac)
     for(int i = 0; i < it->second; i++)
     {
       p *= it->first;
-      std::cout << "multiplying by " << it->first << " for " << (i+1) << " time." << std::endl; 
     }    
   }
   return p;
@@ -34,7 +33,6 @@ int PrimeAssistant::getProductFromFactors(const std::map<int,int> &primeFac)
 
 std::map<int,int> PrimeAssistant::getPrimeFactorization(const int &n)
 {
-  std::cout << "Getting prime factorization of " << n << std::endl;
   std::map<int,int> pf;
   if(n < 0)
   {
@@ -89,7 +87,7 @@ std::map<int,int> PrimeAssistant::addPrimeFacs(const std::map<int,int> &a,
 }
 
 std::map<int,int> PrimeAssistant::subtractPrimeFacs(const std::map<int,int> &a,
-                                                     const std::map<int,int> &b)
+                                                    const std::map<int,int> &b)
 {
   std::map<int,int> difference = a;
   std::map<int,int>::const_iterator it;
@@ -116,9 +114,6 @@ std::map<int,int> PrimeAssistant::subtractPrimeFacs(const std::map<int,int> &a,
 
 bool PrimeAssistant::isIntegerPairCoprime(const int &a, const int &b)
 {
-  std::cout << "############################" << std::endl;
-  std::cout << "#ENTER isIntegerPairCoprime#" << std::endl;
-  std::cout << "############################" << std::endl;
   std::map<int,int> primeFacA = getPrimeFactorization(a);
   std::map<int,int> primeFacB = getPrimeFactorization(b);
 
@@ -130,9 +125,6 @@ bool PrimeAssistant::isIntegerPairCoprime(const int &a, const int &b)
       return false;
     }
   }
-  std::cout << "############################" << std::endl;
-  std::cout << "#EXIT  isIntegerPairCoprime#" << std::endl;
-  std::cout << "############################" << std::endl;
   return true;
 }
 
