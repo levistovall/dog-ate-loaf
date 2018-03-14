@@ -33,30 +33,36 @@ int PrimeAssistant::getProductFromFactors(const std::map<int,int> &primeFac)
 
 std::map<int,int> PrimeAssistant::getPrimeFactorization(const int &n)
 {
+  /*
+   * Get a copy of n because if it is negative we will need to use its
+   * absolute value in order for the remainder of the algorithm to work.
+   */
+  int m = n;
   std::map<int,int> pf;
   if(n < 0)
   {
     pf[-1] = 1;
+    m *= -1;
   }
-  if(isPrimeInteger(n) || isPrimeInteger(-1*n) || n*n == 1)
+  if(isPrimeInteger(m) || isPrimeInteger(-1*m) || m*m == 1)
   {
-    pf[n] = 1;
+    pf[m] = 1;
     return pf;
   }
   int quotient;
-  int greatestRemainingPossibleFactor = n/2;
+  int greatestRemainingPossibleFactor = m/2;
   for(int i = 2; i <= greatestRemainingPossibleFactor; i++)
   {
-    if(isPrimeInteger(i) && (n%i == 0))
+    if(isPrimeInteger(i) && (m%i == 0))
     {
       pf[i] = 0;
-      quotient = n; 
+      quotient = m;
       while(quotient%i == 0)
       {
         quotient /= i;
         pf[i]++;
       }
-      greatestRemainingPossibleFactor = n / getProductFromFactors(pf);
+      greatestRemainingPossibleFactor = m / getProductFromFactors(pf);
       if(isPrimeInteger(greatestRemainingPossibleFactor))
       {
         pf[greatestRemainingPossibleFactor] = 1;
@@ -68,7 +74,7 @@ std::map<int,int> PrimeAssistant::getPrimeFactorization(const int &n)
 }
 
 std::map<int,int> PrimeAssistant::addPrimeFacs(const std::map<int,int> &a,
-                                                const std::map<int,int> &b)
+                                               const std::map<int,int> &b)
 {
   std::map<int,int> sum = a;
   std::map<int,int>::const_iterator it;
