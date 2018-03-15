@@ -108,3 +108,50 @@ TEST_F(PrimeAssistantTest, testIsIntegerPairCoprime)
   EXPECT_FALSE(PrimeAssistant::isIntegerPairCoprime(5831, 2873));
   EXPECT_FALSE(PrimeAssistant::isIntegerPairCoprime(116, 725));
 }
+
+TEST_F(PrimeAssistantTest, testAreIntegersCoprime)
+{
+  std::vector<int> integers;
+  integers.push_back(4);
+  integers.push_back(9);
+  integers.push_back(25);
+  integers.push_back(49);
+  integers.push_back(121);
+  EXPECT_TRUE(PrimeAssistant::areIntegersCoprime(integers));
+
+  integers.push_back(75);
+  EXPECT_FALSE(PrimeAssistant::areIntegersCoprime(integers));
+}
+
+TEST_F(PrimeAssistantTest, testGetGcfOfIntegerPair)
+{
+  EXPECT_EQ(PrimeAssistant::getGcfOfIntegerPair(100, 275), 25);
+  EXPECT_EQ(PrimeAssistant::getGcfOfIntegerPair(162, 300), 6);
+}
+
+TEST_F(PrimeAssistantTest, testGetGcfOfIntegers)
+{
+  std::vector<int> integers;
+  integers.push_back(36);
+  integers.push_back(81);
+  integers.push_back(72);
+  integers.push_back(27);
+  integers.push_back(54);
+  EXPECT_EQ(PrimeAssistant::getGcfOfIntegers(integers), 9);
+}
+
+TEST_F(PrimeAssistantTest, testGetLcmOfIntegerPair)
+{
+  EXPECT_EQ(PrimeAssistant::getLcmOfIntegerPair(36, 27), 108);
+}
+
+TEST_F(PrimeAssistantTest, testGetLcmOfIntegers)
+{
+  std::vector<int> integers;
+  integers.push_back(4);
+  integers.push_back(5);
+  integers.push_back(50);
+  integers.push_back(25);
+  integers.push_back(10);
+  EXPECT_EQ(PrimeAssistant::getLcmOfIntegers(integers), 100);
+}
