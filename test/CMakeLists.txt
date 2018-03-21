@@ -41,4 +41,4 @@ include_directories("${source_dir}/googletest/include"
                     "${source_dir}/googlemock/include")
 
 add_subdirectory(testRational)
-add_subdirectory(testPrimeAssistant)
+add_subdirectory(testFactorUtil)

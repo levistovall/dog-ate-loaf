@@ -1,6 +1,6 @@
-#include "PrimeAssistant.h"
+#include "FactorUtil.h"
 
-bool PrimeAssistant::isPrimeInteger(const int &n)
+bool FactorUtil::isPrimeInteger(const int &n)
 {
   if(n < 2)
   {
@@ -17,7 +17,7 @@ bool PrimeAssistant::isPrimeInteger(const int &n)
   return true;
 }
 
-int PrimeAssistant::getProductFromFactors(const std::map<int,int> &primeFac)
+int FactorUtil::getProductFromFactors(const std::map<int,int> &primeFac)
 {
   int p = 1;
   std::map<int,int>::const_iterator it; 
@@ -31,7 +31,7 @@ int PrimeAssistant::getProductFromFactors(const std::map<int,int> &primeFac)
   return p;
 }
 
-std::map<int,int> PrimeAssistant::getPrimeFactorization(const int &n)
+std::map<int,int> FactorUtil::getPrimeFactorization(const int &n)
 {
   /*
    * Get a copy of n because if it is negative we will need to use its
@@ -73,7 +73,7 @@ std::map<int,int> PrimeAssistant::getPrimeFactorization(const int &n)
   return pf; 
 }
 
-std::map<int,int> PrimeAssistant::addPrimeFacs(const std::map<int,int> &a,
+std::map<int,int> FactorUtil::addPrimeFacs(const std::map<int,int> &a,
                                                const std::map<int,int> &b)
 {
   std::map<int,int> sum = a;
@@ -92,7 +92,7 @@ std::map<int,int> PrimeAssistant::addPrimeFacs(const std::map<int,int> &a,
   return sum;
 }
 
-std::map<int,int> PrimeAssistant::subtractPrimeFacs(const std::map<int,int> &a,
+std::map<int,int> FactorUtil::subtractPrimeFacs(const std::map<int,int> &a,
                                                     const std::map<int,int> &b)
 {
   std::map<int,int> difference = a;
@@ -118,7 +118,7 @@ std::map<int,int> PrimeAssistant::subtractPrimeFacs(const std::map<int,int> &a,
   return difference;
 }
 
-bool PrimeAssistant::isIntegerPairCoprime(const int &a, const int &b)
+bool FactorUtil::isIntegerPairCoprime(const int &a, const int &b)
 {
   std::map<int,int> primeFacA = getPrimeFactorization(a);
   std::map<int,int> primeFacB = getPrimeFactorization(b);
@@ -134,7 +134,7 @@ bool PrimeAssistant::isIntegerPairCoprime(const int &a, const int &b)
   return true;
 }
 
-bool PrimeAssistant::areIntegersCoprime(const std::vector<int> &v)
+bool FactorUtil::areIntegersCoprime(const std::vector<int> &v)
 {
   std::vector<int>::const_iterator it1;
   for(it1 = v.begin(); it1 != v.end(); it1++)
@@ -151,7 +151,7 @@ bool PrimeAssistant::areIntegersCoprime(const std::vector<int> &v)
   return true;
 }
 
-int PrimeAssistant::getGcfOfIntegerPair(const int &a, const int &b)
+int FactorUtil::getGcfOfIntegerPair(const int &a, const int &b)
 {
   const int* lesserInt = &a;
   if(a > b)
@@ -175,7 +175,7 @@ int PrimeAssistant::getGcfOfIntegerPair(const int &a, const int &b)
   return 1;
 }
 
-int PrimeAssistant::getGcfOfIntegers(const std::vector<int> &v)
+int FactorUtil::getGcfOfIntegers(const std::vector<int> &v)
 {
   std::vector<int>::const_iterator it = v.begin();
   std::vector<int>::const_iterator leastInteger = it;
@@ -199,13 +199,13 @@ int PrimeAssistant::getGcfOfIntegers(const std::vector<int> &v)
   return gcf;
 }
 
-int PrimeAssistant::getLcmOfIntegerPair(const int &a, const int &b)
+int FactorUtil::getLcmOfIntegerPair(const int &a, const int &b)
 {
   int gcf = getGcfOfIntegerPair(a, b);
   return (gcf * (a / gcf) * (b / gcf));
 }
 
-int PrimeAssistant::getLcmOfIntegers(const std::vector<int> &v)
+int FactorUtil::getLcmOfIntegers(const std::vector<int> &v)
 {
   std::map<int,int> allFactorsOfLcm;
   std::map<int,int> primeFacOfCurrent; 

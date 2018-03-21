@@ -8,7 +8,7 @@ Rational::Rational(int _numerator, int _denominator)
   }
   else
   {
-    int gcf = PrimeAssistant::getGcfOfIntegerPair(_numerator, _denominator);
+    int gcf = FactorUtil::getGcfOfIntegerPair(_numerator, _denominator);
     this->numerator   = _numerator / gcf;
     this->denominator = _denominator / gcf;
   }
@@ -37,10 +37,10 @@ int Rational::getDenominator() const
 std::map<int, int> Rational::getPrimeFac() const
 {
   std::map<int,int> primeFacNumer = 
-                      PrimeAssistant::getPrimeFactorization(this->numerator);
+                      FactorUtil::getPrimeFactorization(this->numerator);
   std::map<int,int> primeFacDenom = 
-                      PrimeAssistant::getPrimeFactorization(this->denominator);
-  return PrimeAssistant::subtractPrimeFacs(primeFacNumer, primeFacDenom); 
+                      FactorUtil::getPrimeFactorization(this->denominator);
+  return FactorUtil::subtractPrimeFacs(primeFacNumer, primeFacDenom); 
 }
 
 std::string Rational::toString() const
@@ -123,7 +123,7 @@ Rational Rational::operator/=(const int &i)
 Rational operator+(const Rational &r, const Rational &q)
 {
   int sumDenominator = 
-        PrimeAssistant::getLcmOfIntegerPair(r.getDenominator(),
+        FactorUtil::getLcmOfIntegerPair(r.getDenominator(),
                                             q.getDenominator());
   int balanceFactorForThisNumerator  = sumDenominator / r.getDenominator();
   int balanceFactorForOtherNumerator = sumDenominator / q.getDenominator();

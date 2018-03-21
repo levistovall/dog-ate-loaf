@@ -1,12 +1,12 @@
-#ifndef PRIMEASSISTANT_H_
-#define PRIMEASSISTANT_H_
+#ifndef FACTORUTIL_H_
+#define FACTORUTIL_H_
 
 #include <map>
 #include <vector>
 #include <iostream>
 #include <math.h>
 
-class PrimeAssistant
+class FactorUtil
 {
 public:
   static bool isPrimeInteger(const int &n);

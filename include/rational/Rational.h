@@ -6,7 +6,7 @@
 #include <cmath>
 #include <string.h>
 #include <sstream>
-#include "PrimeAssistant.h"
+#include "FactorUtil.h"
 #include "division_by_zero_exception.h"
 
 class Rational
