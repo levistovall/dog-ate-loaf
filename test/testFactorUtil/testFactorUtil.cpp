@@ -28,7 +28,7 @@ TEST_F(FactorUtilTest, testIsPrimeInteger)
   EXPECT_FALSE(FactorUtil::isPrimeInteger(100));
   EXPECT_FALSE(FactorUtil::isPrimeInteger(248));
   EXPECT_FALSE(FactorUtil::isPrimeInteger(584));
-  EXPECT_FALSE(FactorUtil::isPrimeInteger(2147483648));
+  EXPECT_FALSE(FactorUtil::isPrimeInteger(2147483646));
 }
 
 TEST_F(FactorUtilTest, testGetProductFromFactors)
@@ -127,6 +127,7 @@ TEST_F(FactorUtilTest, testGetGcfOfIntegerPair)
 {
   EXPECT_EQ(FactorUtil::getGcfOfIntegerPair(100, 275), 25);
   EXPECT_EQ(FactorUtil::getGcfOfIntegerPair(162, 300), 6);
+  EXPECT_EQ(FactorUtil::getGcfOfIntegerPair(1073741824, 774840978), 2);
 }
 
 TEST_F(FactorUtilTest, testGetGcfOfIntegers)

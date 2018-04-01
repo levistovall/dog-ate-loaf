@@ -7,7 +7,9 @@ bool FactorUtil::isPrimeInteger(const int &n)
     return false;
   }
 
-  for(int i = 2; i < n/2 + 1; i++)
+  int greatestPossibleFactorCeiling =
+        static_cast<int>(floor(pow(static_cast<double>(n), 0.5))) + 1;
+  for(int i = 2; i < greatestPossibleFactorCeiling; i++)
   {
     if(n%i == 0)
     {
@@ -44,13 +46,14 @@ std::map<int,int> FactorUtil::getPrimeFactorization(const int &n)
     pf[-1] = 1;
     m *= -1;
   }
-  if(isPrimeInteger(m) || isPrimeInteger(-1*m) || m*m == 1)
+  if(isPrimeInteger(m))
   {
     pf[m] = 1;
     return pf;
   }
   int quotient;
-  int greatestRemainingPossibleFactor = m/2;
+  int greatestRemainingPossibleFactor =
+      static_cast<int>(floor(pow(static_cast<double>(m), 0.5))) + 1;
   for(int i = 2; i <= greatestRemainingPossibleFactor; i++)
   {
     if(isPrimeInteger(i) && (m%i == 0))
@@ -154,25 +157,29 @@ bool FactorUtil::areIntegersCoprime(const std::vector<int> &v)
 int FactorUtil::getGcfOfIntegerPair(const int &a, const int &b)
 {
   const int* lesserInt = &a;
+  const int* greaterInt = &b;
   if(a > b)
   {
     lesserInt = &b;
+    greaterInt = &a;
   }
-  int gcf = *lesserInt;
-  int i = 2;
-  while(gcf > 1)
+  std::map<int,int> greaterPrimeFac = getPrimeFactorization(*greaterInt);
+  std::map<int,int> lesserPrimeFac = getPrimeFactorization(*lesserInt);
+  int gcf = 1;
+  std::map<int,int>::const_iterator it;
+  for(it = lesserPrimeFac.begin(); it != lesserPrimeFac.end(); it++)
   {
-    if((a % gcf == 0) && (b % gcf == 0))
+    if(greaterPrimeFac.count(it->first))
     {
-      return gcf;
-    }
-    else
-    {
-      gcf = *lesserInt / i;
-      i++; 
+      int numOfCommonOccurrencesOfCurrentPrimeFactor =
+          std::min(it->second, greaterPrimeFac[it->first]);
+      for(int i = 0; i < numOfCommonOccurrencesOfCurrentPrimeFactor; i++)
+      {
+        gcf *= it->first;
+      }
     }
   }
-  return 1;
+  return gcf;
 }
 
 int FactorUtil::getGcfOfIntegers(const std::vector<int> &v)
