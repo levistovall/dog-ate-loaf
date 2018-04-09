@@ -14,12 +14,31 @@ public:
   virtual AbstractVector(int length);
   virtual ~AbstractVector();
 
-  template<typename U>
-  auto getDotProductWith(const AbstractVector<U> &other);
+  int getLength() const;
+
+  const T &operator[](int index) const;
+
+  T &operator[](int index);
 
 private:
   std::vector<T> content;
   int length;
 };
+
+template<typename T, typename U>
+auto operator*(const T &t, const AbstractVector<U> &a) -> AbstractVector<decltype(T{} * U{})>;
+
+template<typename T, typename U>
+auto operator*(const AbstractVector<T> &a, const U &u) -> AbstractVector<decltype(T{} * U{})>;
+
+template<typename T, typename U>
+auto operator*(const AbstractVector<T> &a, const AbstractVector<U> &b) -> AbstractVector<decltype(T{} * U{})>;
+
+template<typename T, typename U>
+auto operator+(const AbstractVector<T> &a, const AbstractVector<U> &b) -> AbstractVector<decltype(T{} + U{})>;
+
+template<typename T, typename U>
+auto operator-(const AbstractVector<T> &a, const AbstractVector<U> &b) -> AbstractVector<decltype(T{} - U{})>;
+
 
 #endif
