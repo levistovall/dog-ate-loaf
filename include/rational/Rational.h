@@ -26,7 +26,7 @@ public:
   float  toFloat() const;
   int    toInteger() const;
 
-  static const double tol = 1e-10;  
+  static constexpr double tol = 1e-10;
 
   Rational operator+=(const Rational &r);
   Rational operator+=(const int      &i);

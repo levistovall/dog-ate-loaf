@@ -23,7 +23,7 @@ public:
   Matrix<T> &operator[](int index);
 
 private:
-  std::vector<std::vector<T>> content;
+  std::vector<std::vector<T> > content;
   int numberOfRows;
   int numberOfColumns;
 };
