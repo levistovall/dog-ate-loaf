@@ -1,5 +1,5 @@
-#ifndef VECTOR_H_
-#define VECTOR_H_
+#ifndef MATRIX_H_
+#define MATRIX_H_
 
 #include <map>
 #include <vector>

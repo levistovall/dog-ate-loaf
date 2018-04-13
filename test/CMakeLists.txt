@@ -42,3 +42,4 @@ include_directories("${source_dir}/googletest/include"
 
 add_subdirectory(testRational)
 add_subdirectory(testFactorUtil)
+add_subdirectory(testMatrix)
