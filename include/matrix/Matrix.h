@@ -6,6 +6,7 @@
 #include <iostream>
 #include <math.h>
 #include <typeinfo>
+#include "Rational.h"
 
 template<typename T>
 class Matrix
