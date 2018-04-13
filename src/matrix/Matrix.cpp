@@ -37,7 +37,7 @@ template<typename T>
 Matrix<T> &Matrix<T>::operator[](int index)
 {
   Matrix<T> result(1, numberOfColumns);
-  result[0] = content[index];
+  //result[0] = content[index];
   return result;
 }
 
@@ -45,7 +45,7 @@ template<typename T>
 const Matrix<T> &Matrix<T>::operator[](int index) const
 {
   Matrix<T> result(1, numberOfColumns);
-  result[0] = content[index];
+  //result[0] = content[index];
   return result;
 }
 
