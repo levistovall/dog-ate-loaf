@@ -23,6 +23,10 @@ public:
 
   Matrix<T> &operator[](int index);
 
+  void setContent(std::vector<std::vector<T> > content_);
+  void setRow(int rowIdx, std::vector<T> row_);
+  void setColumn(int columnIdx, std::vector<T> column_);
+
 private:
   std::vector<std::vector<T> > content;
   int numberOfRows;

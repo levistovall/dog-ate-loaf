@@ -49,6 +49,33 @@ const Matrix<T> &Matrix<T>::operator[](int index) const
   return result;
 }
 
+template<typename T>
+void Matrix<T>::setContent(std::vector<std::vector<T> > content_)
+{
+  content = content_;
+}
+
+template<typename T>
+void Matrix<T>::setRow(int rowIdx, std::vector<T> row_)
+{
+  if(row_.size() == content.at(0).size())
+  {
+    content.at(rowIdx) = row_;
+  }
+}
+
+template<typename T>
+void Matrix<T>::setColumn(int columnIdx, std::vector<T> column_)
+{
+  if(column_.size() == content.size())
+  {
+    for(int i = 0; i < column_.size(); i++)
+    {
+      content.at(i).at(columnIdx) = column_.at(i);
+    }
+  }
+}
+
 template<typename T1, typename T2>
 auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{} * T2{})>
 {
