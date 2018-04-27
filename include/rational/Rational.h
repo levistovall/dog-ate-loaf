@@ -126,4 +126,6 @@ bool     operator>=(const float    &f, const Rational &r);
 bool     operator>=(const Rational &r, const double   &d); 
 bool     operator>=(const double   &d, const Rational &r); 
 
+std::ostream &operator<<(std::ostream &out, Rational const &r);
+
 #endif

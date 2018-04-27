@@ -53,7 +53,9 @@ int Matrix<T>::getNumberOfColumns() const
 template<typename T>
 Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
 {
-
+  numberOfRows = m.getNumberOfRows();
+  numberOfColumns = m.getNumberOfColumns();
+  content = m.getContent();
 }
 
 template<typename T>
@@ -80,36 +82,32 @@ const std::vector<std::vector<T> > &Matrix<T>::getContent() const
   return content;
 }
 
-template<typename T1, typename T2>
-auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{} * T2{})>&
+template<typename T>
+std::string Matrix<T>::toString() const
 {
-  Matrix<decltype(T1{} * T2{})> result(a.getNumberOfRows(), a.getNumberOfColumns());
-  for(int i = 0; i < result.getNumberOfRows(); i++)
+  std::stringstream ss;
+  ss << "[";
+  for(int i = 0; i < numberOfRows; i++)
   {
-    for(int j = 0; j < result.getNumberOfColumns(); j++)
+    if(i > 0)
     {
-      result[i][j] = a[i][j] * t1;
+      ss << " ";
+    }
+    ss << "[";
+    for(int j = 0; j < numberOfColumns; j++)
+    {
+      ss << content[i][j];
+      if(j < numberOfColumns-1)
+      {
+        ss << " ";
+      }
+    }
+    ss << "]";
+    if(i < numberOfRows-1)
+    {
+      ss << std::endl;
     }
   }
-  return result;
-}
-
-template<typename T1, typename T2>
-auto operator*(const Matrix<T1> &a, const T2 &t2) -> Matrix<decltype(T1{} * T2{})>&
-{
-  Matrix<decltype(T1{} * T2{})> result(a.getNumberOfRows(), a.getNumberOfColumns());
-  for(int i = 0; i < result.getNumberOfRows(); i++)
-  {
-    for(int j = 0; j < result.getNumberOfColumns(); j++)
-    {
-      result[i][j] = a[i][j] * t2;
-    }
-  }
-  return result;
-}
-
-template<typename T1, typename T2>
-auto operator*(const Matrix<T1> &v, const Matrix<T2> &u) -> Matrix<decltype(T1{} * T2{})>&
-{
-
+  ss << "]" << std::endl;
+  return ss.str();
 }

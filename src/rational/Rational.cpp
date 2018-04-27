@@ -348,3 +348,9 @@ bool operator!=(const double &d, const Rational &r)
 {
   return !(r == d);
 }
+
+std::ostream &operator<<(std::ostream &out, const Rational &r)
+{
+  out << r.toString();
+  return out;
+}

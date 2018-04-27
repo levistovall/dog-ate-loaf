@@ -45,16 +45,29 @@ TEST_F(MatrixTest, testContentGetters)
 
 TEST_F(MatrixTest, testScalarMultiplication)
 {
+  const int scalar = 3;
+
   Matrix<int> mat1(3, 2);
   for(int i = 0; i < mat1.getNumberOfRows(); i++)
   {
     for(int j = 0; j < mat1.getNumberOfColumns(); j++)
     {
       mat1[i][j] = (i+1) * (j+1);
-      std::cout << mat1[i][j] << " ";
     }
-    std::cout << std::endl;
   }
 
-  Matrix<int> mat2 = 3 * mat1;
+  std::cout << mat1;
+
+  //mat1 = scalar * mat1;
+  Matrix<int> mat2 = scalar * mat1;
+  std::cout << mat2;
+
+  for(int i = 0; i < mat2.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < mat2.getNumberOfColumns(); j++)
+    {
+      ASSERT_EQ(mat2[i][j], scalar * ((i+1) * (j+1)));
+    }
+  }
+
 }
