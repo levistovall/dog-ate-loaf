@@ -56,6 +56,7 @@ Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
   numberOfRows = m.getNumberOfRows();
   numberOfColumns = m.getNumberOfColumns();
   content = m.getContent();
+  return *this;
 }
 
 template<typename T>

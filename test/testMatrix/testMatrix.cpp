@@ -25,49 +25,78 @@ TEST_F(MatrixTest, testGetNumberOfRowsAndGetNumberOfRows)
 
 TEST_F(MatrixTest, testContentGetters)
 {
-  Matrix<int> mat(2,2);
-  for(int i = 0; i < mat.getNumberOfRows(); i++)
+  Matrix<int> intMat(2,2);
+  Matrix<double> doubleMat(2,2);
+  Matrix<float> floatMat(2,2);
+  Matrix<Rational> ratMat(2,2);
+  for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
-    for(int j = 0; j < mat.getNumberOfColumns(); j++)
+    for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      mat[i][j] = (i+1) * (j+1);
+      intMat[i][j] = (i+1) * (j+1);
+      doubleMat[i][j] = (i+1) * (j+1) + 0.0005;
+      floatMat[i][j] = (i+1) * (j+1) + 0.0005;
+      ratMat[i][j] = Rational((i+1) * (j+1), 7);
     }
   }
 
-  for(int i = 0; i < mat.getNumberOfRows(); i++)
+  for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
-    for(int j = 0; j < mat.getNumberOfColumns(); j++)
+    for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(mat[i][j], (i+1) * (j+1));
+      ASSERT_EQ(intMat[i][j], (i+1) * (j+1));
+      //ASSERT_EQ(doubleMat[i][j], (i+1) * (j+1) + 0.0005);
+      //ASSERT_EQ(floatMat[i][j], (i+1) * (j+1) + 0.0005);
+      ASSERT_EQ(ratMat[i][j], Rational((i+1) * (j+1), 7));
     }
   }
 }
 
 TEST_F(MatrixTest, testScalarMultiplication)
 {
-  const int scalar = 3;
+  const int intScalar = 3;
+  const double doubleScalar = 3.02;
+  const float floatScalar = 3.2;
+  const Rational rationalScalar(3,7);
 
-  Matrix<int> mat1(3, 2);
-  for(int i = 0; i < mat1.getNumberOfRows(); i++)
+  Matrix<int> intMat(3,2);
+  Matrix<double> doubleMat(3,2);
+  Matrix<float> floatMat(3,2);
+  Matrix<Rational> ratMat(3,2);
+  for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
-    for(int j = 0; j < mat1.getNumberOfColumns(); j++)
+    for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      mat1[i][j] = (i+1) * (j+1);
+      intMat[i][j] = (i+1) * (j+1);
+      doubleMat[i][j] = (i+1) * (j+1) + 0.0005;
+      floatMat[i][j] = (i+1) * (j+1) + 0.0005;
+      ratMat[i][j] = Rational((i+1) * (j+1), 7);
     }
   }
 
-  std::cout << mat1;
+  std::cout << intMat;
+  std::cout << doubleMat;
+  std::cout << floatMat;
+  std::cout << ratMat;
 
-  //mat1 = scalar * mat1;
-  Matrix<int> mat2 = scalar * mat1;
-  std::cout << mat2;
+  intMat = intMat * intScalar;
+  doubleMat = doubleMat * doubleScalar;
+  floatMat = floatMat * floatScalar;
+  ratMat = ratMat * rationalScalar;
 
-  for(int i = 0; i < mat2.getNumberOfRows(); i++)
+  std::cout << intMat;
+  std::cout << doubleMat;
+  std::cout << floatMat;
+  std::cout << ratMat;
+
+  for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
-    for(int j = 0; j < mat2.getNumberOfColumns(); j++)
+    for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(mat2[i][j], scalar * ((i+1) * (j+1)));
+      ASSERT_EQ(intMat[i][j], intScalar * ((i+1) * (j+1)));
+      //ASSERT_EQ(doubleMat[i][j], doubleScalar * ((i+1) * (j+1) + 0.0005));
+      //ASSERT_EQ(floatMat[i][j], floatScalar * ((i+1) * (j+1) + 0.0005));
+      ASSERT_EQ(ratMat[i][j], rationalScalar * Rational((i+1) * (j+1), 7));
     }
   }
-
 }
