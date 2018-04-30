@@ -100,3 +100,27 @@ TEST_F(MatrixTest, testScalarMultiplication)
     }
   }
 }
+
+TEST_F(MatrixTest, testMatrixMultiplication)
+{
+  Matrix<int> intLMatrix(2,2);
+
+  Matrix<int> intRMatrix(2,2);
+
+  for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
+    {
+      intLMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+    }
+  }
+  std::cout << intLMatrix;
+  Matrix<int> intMatrixProduct = intLMatrix * intRMatrix;
+  std::cout << intMatrixProduct;
+  ASSERT_EQ(intMatrixProduct[0][0], 45);
+  ASSERT_EQ(intMatrixProduct[0][1], 48);
+  ASSERT_EQ(intMatrixProduct[1][0], 48);
+  ASSERT_EQ(intMatrixProduct[1][1], 61);
+}
+
