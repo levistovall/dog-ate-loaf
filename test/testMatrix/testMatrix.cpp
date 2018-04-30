@@ -1,5 +1,7 @@
 #include "testMatrix.h"
 
+#define FLOATING_POINT_EQ_TOL_ 1e-10
+
 MatrixTest::MatrixTest()
 {}
 
@@ -45,8 +47,8 @@ TEST_F(MatrixTest, testContentGetters)
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
       ASSERT_EQ(intMat[i][j], (i+1) * (j+1));
-      //ASSERT_EQ(doubleMat[i][j], (i+1) * (j+1) + 0.0005);
-      //ASSERT_EQ(floatMat[i][j], (i+1) * (j+1) + 0.0005);
+      ASSERT_TRUE(abs(doubleMat[i][j] - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMat[i][j] - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
       ASSERT_EQ(ratMat[i][j], Rational((i+1) * (j+1), 7));
     }
   }
@@ -94,7 +96,7 @@ TEST_F(MatrixTest, testScalarMultiplication)
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
       ASSERT_EQ(intMat[i][j], intScalar * ((i+1) * (j+1)));
-      //ASSERT_EQ(doubleMat[i][j], doubleScalar * ((i+1) * (j+1) + 0.0005));
+      ASSERT_TRUE(doubleMat[i][j] == doubleScalar * ((i+1) * (j+1) + 0.0005));
       //ASSERT_EQ(floatMat[i][j], floatScalar * ((i+1) * (j+1) + 0.0005));
       ASSERT_EQ(ratMat[i][j], rationalScalar * Rational((i+1) * (j+1), 7));
     }
@@ -104,8 +106,14 @@ TEST_F(MatrixTest, testScalarMultiplication)
 TEST_F(MatrixTest, testMatrixMultiplication)
 {
   Matrix<int> intLMatrix(2,2);
+  Matrix<double> doubleLMatrix(2,2);
+  Matrix<float> floatLMatrix(2,2);
+  Matrix<Rational> rationalLMatrix(2,2);
 
   Matrix<int> intRMatrix(2,2);
+  Matrix<double> doubleRMatrix(2,2);
+  Matrix<float> floatRMatrix(2,2);
+  Matrix<Rational> rationalRMatrix(2,2);
 
   for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
   {
@@ -113,6 +121,15 @@ TEST_F(MatrixTest, testMatrixMultiplication)
     {
       intLMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
       intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+
+      doubleLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      floatLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      rationalLMatrix[i][j] = Rational(i+j+1,7);
+      rationalRMatrix[i][j] = Rational(i+j+1,7);
     }
   }
   std::cout << intLMatrix;
@@ -122,5 +139,29 @@ TEST_F(MatrixTest, testMatrixMultiplication)
   ASSERT_EQ(intMatrixProduct[0][1], 48);
   ASSERT_EQ(intMatrixProduct[1][0], 48);
   ASSERT_EQ(intMatrixProduct[1][1], 61);
+
+  std::cout << doubleLMatrix;
+  Matrix<double> doubleMatrixProduct = doubleLMatrix * doubleRMatrix;
+  std::cout << doubleMatrixProduct;
+  /*ASSERT_EQ(doubleMatrixProduct[0][0], 45);
+  ASSERT_EQ(doubleMatrixProduct[0][1], 48);
+  ASSERT_EQ(doubleMatrixProduct[1][0], 48);
+  ASSERT_EQ(doubleMatrixProduct[1][1], 61);*/
+
+  std::cout << floatLMatrix;
+  Matrix<float> floatMatrixProduct = floatLMatrix * floatRMatrix;
+  std::cout << floatMatrixProduct;
+  /*ASSERT_EQ(floatMatrixProduct[0][0], 45);
+  ASSERT_EQ(floatMatrixProduct[0][1], 48);
+  ASSERT_EQ(floatMatrixProduct[1][0], 48);
+  ASSERT_EQ(floatMatrixProduct[1][1], 61);*/
+
+  std::cout << rationalLMatrix;
+  Matrix<Rational> rationalMatrixProduct = rationalLMatrix * rationalRMatrix;
+  std::cout << rationalMatrixProduct;
+  ASSERT_EQ(rationalMatrixProduct[0][0], Rational(5,49));
+  ASSERT_EQ(rationalMatrixProduct[0][1], Rational(8,49));
+  ASSERT_EQ(rationalMatrixProduct[1][0], Rational(8,49));
+  ASSERT_EQ(rationalMatrixProduct[1][1], Rational(13,49));
 }
 
