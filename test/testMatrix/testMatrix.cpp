@@ -96,8 +96,8 @@ TEST_F(MatrixTest, testScalarMultiplication)
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
       ASSERT_EQ(intMat[i][j], intScalar * ((i+1) * (j+1)));
-      ASSERT_TRUE(doubleMat[i][j] == doubleScalar * ((i+1) * (j+1) + 0.0005));
-      //ASSERT_EQ(floatMat[i][j], floatScalar * ((i+1) * (j+1) + 0.0005));
+      ASSERT_TRUE(abs(doubleMat[i][j] - (doubleScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMat[i][j] - (floatScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
       ASSERT_EQ(ratMat[i][j], rationalScalar * Rational((i+1) * (j+1), 7));
     }
   }
