@@ -44,7 +44,7 @@ std::ostream &operator<<(std::ostream &out, Matrix<T> const &m)
 }
 
 template<typename T1, typename T2>
-inline auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{} * T2{})>
+auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{} * T2{})>
 {
   Matrix<decltype(T1{} * T2{})> result(a.getNumberOfRows(), a.getNumberOfColumns());
   for(int i = 0; i < result.getNumberOfRows(); i++)
@@ -60,15 +60,7 @@ inline auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{}
 template<typename T1, typename T2>
 auto operator*(const Matrix<T1> &a, const T2 &t2) -> Matrix<decltype(T1{} * T2{})>
 {
-  Matrix<decltype(T1{} * T2{})> result(a.getNumberOfRows(), a.getNumberOfColumns());
-  for(int i = 0; i < result.getNumberOfRows(); i++)
-  {
-    for(int j = 0; j < result.getNumberOfColumns(); j++)
-    {
-      result[i][j] = a[i][j] * t2;
-    }
-  }
-  return result;
+  return t2 * a;
 }
 
 template<typename T1, typename T2>
@@ -99,7 +91,7 @@ auto operator*(const Matrix<T1> &a, const Matrix<T2> &b) -> Matrix<decltype(T1{}
 template<typename T1, typename T2>
 auto operator+(const Matrix<T1> &a, const Matrix<T2> &b) -> Matrix<decltype(T1{} + T2{})>
 {
-  if(!((a.getNumberOfRows() == b.getNumberOfRows()) && (a.getNumberOfColumns() == b.getNumberOfColumns())))
+  if(((a.getNumberOfRows() == b.getNumberOfRows()) && (a.getNumberOfColumns() == b.getNumberOfColumns())))
   {
     Matrix<decltype(T1{} * T2{})> result(a.getNumberOfRows(), a.getNumberOfColumns());
     for(int i = 0; i < result.getNumberOfRows(); i++)
@@ -109,6 +101,7 @@ auto operator+(const Matrix<T1> &a, const Matrix<T2> &b) -> Matrix<decltype(T1{}
         result[i][j] = a[i][j] + b[i][j];
       }
     }
+    return result;
   }
   else
   {

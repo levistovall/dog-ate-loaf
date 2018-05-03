@@ -165,3 +165,62 @@ TEST_F(MatrixTest, testMatrixMultiplication)
   ASSERT_EQ(rationalMatrixProduct[1][1], Rational(13,49));
 }
 
+TEST_F(MatrixTest, testMatrixAddition)
+{
+  Matrix<int> intLMatrix(2,2);
+  Matrix<double> doubleLMatrix(2,2);
+  Matrix<float> floatLMatrix(2,2);
+  Matrix<Rational> rationalLMatrix(2,2);
+
+  Matrix<int> intRMatrix(2,2);
+  Matrix<double> doubleRMatrix(2,2);
+  Matrix<float> floatRMatrix(2,2);
+  Matrix<Rational> rationalRMatrix(2,2);
+
+  for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
+    {
+      intLMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+
+      doubleLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      floatLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      rationalLMatrix[i][j] = Rational(i+j+1,7);
+      rationalRMatrix[i][j] = Rational(i+j+1,7);
+    }
+  }
+  std::cout << intLMatrix;
+  Matrix<int> intMatrixSum = intLMatrix + intRMatrix;
+  std::cout << intMatrixSum;
+
+  std::cout << doubleLMatrix;
+  Matrix<double> doubleMatrixSum = doubleLMatrix + doubleRMatrix;
+  std::cout << doubleMatrixSum;
+
+  std::cout << floatLMatrix;
+  Matrix<float> floatMatrixSum = floatLMatrix + floatRMatrix;
+  std::cout << floatMatrixSum;
+
+  std::cout << rationalLMatrix;
+  Matrix<Rational> rationalMatrixSum = rationalLMatrix + rationalRMatrix;
+  std::cout << rationalMatrixSum;
+
+  for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
+    {
+      ASSERT_EQ(intMatrixSum[i][j], 2 * ((((i+1) * (j+1)) * 3) % 7));
+
+      ASSERT_TRUE(abs(doubleMatrixSum[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+
+      ASSERT_TRUE(abs(floatMatrixSum[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+
+      ASSERT_EQ(rationalMatrixSum[i][j], 2 * (Rational(i+j+1,7)));
+    }
+  }
+}
