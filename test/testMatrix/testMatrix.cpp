@@ -224,3 +224,63 @@ TEST_F(MatrixTest, testMatrixAddition)
     }
   }
 }
+
+TEST_F(MatrixTest, testMatrixSubtraction)
+{
+  Matrix<int> intLMatrix(2,2);
+  Matrix<double> doubleLMatrix(2,2);
+  Matrix<float> floatLMatrix(2,2);
+  Matrix<Rational> rationalLMatrix(2,2);
+
+  Matrix<int> intRMatrix(2,2);
+  Matrix<double> doubleRMatrix(2,2);
+  Matrix<float> floatRMatrix(2,2);
+  Matrix<Rational> rationalRMatrix(2,2);
+
+  for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
+    {
+      intLMatrix[i][j] = 3 * ((((i+1) * (j+1)) * 3) % 7);
+      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+
+      doubleLMatrix[i][j] = 3 * (((i+1.1) * (j+1.1)) * 3);
+      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      floatLMatrix[i][j] = 3 * (((i+1.1) * (j+1.1)) * 3);
+      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+
+      rationalLMatrix[i][j] = 3 * Rational(i+j+1,7);
+      rationalRMatrix[i][j] = Rational(i+j+1,7);
+    }
+  }
+  std::cout << intLMatrix;
+  Matrix<int> intMatrixDifference = intLMatrix - intRMatrix;
+  std::cout << intMatrixDifference;
+
+  std::cout << doubleLMatrix;
+  Matrix<double> doubleMatrixDifference = doubleLMatrix - doubleRMatrix;
+  std::cout << doubleMatrixDifference;
+
+  std::cout << floatLMatrix;
+  Matrix<float> floatMatrixDifference = floatLMatrix - floatRMatrix;
+  std::cout << floatMatrixDifference;
+
+  std::cout << rationalLMatrix;
+  Matrix<Rational> rationalMatrixDifference = rationalLMatrix - rationalRMatrix;
+  std::cout << rationalMatrixDifference;
+
+  for(int i = 0; i < intLMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
+    {
+      ASSERT_EQ(intMatrixDifference[i][j], 2 * ((((i+1) * (j+1)) * 3) % 7));
+
+      ASSERT_TRUE(abs(doubleMatrixDifference[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+
+      ASSERT_TRUE(abs(floatMatrixDifference[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+
+      ASSERT_EQ(rationalMatrixDifference[i][j], 2 * (Rational(i+j+1,7)));
+    }
+  }
+}

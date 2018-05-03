@@ -30,10 +30,12 @@ public:
 
   std::string toString() const;
 
-private:
+protected:
   std::vector<std::vector<T> > content;
   int numberOfRows;
   int numberOfColumns;
+
+  Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
 };
 
 template<typename T>

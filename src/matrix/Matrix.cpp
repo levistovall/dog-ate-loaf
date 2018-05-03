@@ -112,3 +112,35 @@ std::string Matrix<T>::toString() const
   ss << "]" << std::endl;
   return ss.str();
 }
+
+template<typename T>
+Matrix<T> Matrix<T>::getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const
+{
+  Matrix<T> subMatrix(numberOfRows-1, numberOfColumns-1);
+  int rowToCopyIdx = 0;
+  int colToCopyIdx = 0;
+  for(int i = 0; i < subMatrix.getNumberOfRows(); i++)
+  {
+    if(i == rowToNixIdx)
+    {
+      rowToCopyIdx += 2;
+    }
+    else
+    {
+      rowToCopyIdx++;
+    }
+    for(int j = 0; j < subMatrix.getNumberOfColumns(); j++)
+    {
+      if(j == colToNixIdx)
+      {
+        colToNixIdx += 2;
+      }
+      else
+      {
+        colToNixIdx++;
+      }
+      subMatrix[i][j] = content[rowToCopyIdx][colToCopyIdx];
+    }
+  }
+  return subMatrix;
+}
