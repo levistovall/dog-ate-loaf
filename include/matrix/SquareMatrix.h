@@ -4,7 +4,7 @@
 #include "Matrix.h"
 
 template<typename T>
-class SquareMatrix : public Matrix
+class SquareMatrix : public Matrix<T>
 {
 public:
   SquareMatrix(int dimension_);
