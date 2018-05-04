@@ -284,3 +284,17 @@ TEST_F(MatrixTest, testMatrixSubtraction)
     }
   }
 }
+
+TEST_F(MatrixTest, testGetSubMatrix)
+{
+  Matrix<int> intMatrix(3, 3);
+  for(int i = 0; i < intMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
+    {
+      intMatrix[i][j] = (i*3) + j;
+    }
+  }
+  std::cout << intMatrix;
+  std::cout << intMatrix.getSubMatrixExcludingSpecifiedRowAndColumn(1, 1);
+}

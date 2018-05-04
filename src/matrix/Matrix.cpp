@@ -118,29 +118,24 @@ Matrix<T> Matrix<T>::getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx,
 {
   Matrix<T> subMatrix(numberOfRows-1, numberOfColumns-1);
   int rowToCopyIdx = 0;
-  int colToCopyIdx = 0;
+  int colToCopyIdx;
   for(int i = 0; i < subMatrix.getNumberOfRows(); i++)
   {
+    colToCopyIdx = 0;
     if(i == rowToNixIdx)
     {
-      rowToCopyIdx += 2;
-    }
-    else
-    {
-      rowToCopyIdx++;
+      rowToCopyIdx ++;
     }
     for(int j = 0; j < subMatrix.getNumberOfColumns(); j++)
     {
       if(j == colToNixIdx)
       {
-        colToNixIdx += 2;
-      }
-      else
-      {
-        colToNixIdx++;
+        colToCopyIdx ++;
       }
       subMatrix[i][j] = content[rowToCopyIdx][colToCopyIdx];
+      colToCopyIdx++;
     }
+    rowToCopyIdx++;
   }
   return subMatrix;
 }
