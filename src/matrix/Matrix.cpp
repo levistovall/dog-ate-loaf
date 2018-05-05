@@ -1,10 +1,5 @@
 #include "Matrix.h"
 
-template class Matrix<int>;
-template class Matrix<double>;
-template class Matrix<float>;
-template class Matrix<Rational>;
-
 template<typename T>
 Matrix<T>::Matrix(int numberOfRows_, int numberOfColumns_)
 {
@@ -87,7 +82,7 @@ template<typename T>
 std::string Matrix<T>::toString() const
 {
   std::stringstream ss;
-  ss << "[";
+  ss << std::endl << "[";
   for(int i = 0; i < numberOfRows; i++)
   {
     if(i > 0)
@@ -139,3 +134,8 @@ Matrix<T> Matrix<T>::getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx,
   }
   return subMatrix;
 }
+
+template class Matrix<int>;
+template class Matrix<double>;
+template class Matrix<float>;
+template class Matrix<Rational>;

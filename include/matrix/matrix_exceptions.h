@@ -30,4 +30,17 @@ public:
   }
 };
 
+class non_square_matrix_passed_to_square_matrix_constructor_exception: public std::exception
+{
+public:
+  virtual const char* what() const throw()
+  {
+    std::stringstream ss;
+    ss << "The SquareMatrix constructor SquareMatrix(const Matrix &m) "
+       << "succeeds in creating a SquareMatrix only if the Matrix m "
+       << "has an equal number of rows and columns.";
+    return ss.str().c_str();
+  }
+};
+
 #endif

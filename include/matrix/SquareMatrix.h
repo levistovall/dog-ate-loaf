@@ -9,7 +9,7 @@ class SquareMatrix : public Matrix<T>
 public:
   SquareMatrix(int dimension_);
   SquareMatrix(const SquareMatrix &m);
-  SquareMatrix(const Matrix &m);
+  SquareMatrix(const Matrix<T> &m);
 
   T getDeterminant() const;
 };

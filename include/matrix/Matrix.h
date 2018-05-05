@@ -29,8 +29,8 @@ public:
   std::vector<std::vector<T> > &getContent();
 
   std::string toString() const;
-  Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
 
+  Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
 protected:
   std::vector<std::vector<T> > content;
   int numberOfRows;

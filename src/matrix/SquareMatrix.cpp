@@ -1,34 +1,43 @@
 #include "SquareMatrix.h"
 
-template class Matrix<int>;
-template class Matrix<double>;
-template class Matrix<float>;
-template class Matrix<Rational>;
+template<typename T>
+SquareMatrix<T>::SquareMatrix(int dimension_) : Matrix<T>(dimension_, dimension_){}
 
 template<typename T>
-SquareMatrix<T>::SquareMatrix(int dimension_) : Matrix(dimension_, dimension_){}
+SquareMatrix<T>::SquareMatrix(const Matrix<T> &m) : Matrix<T>(m)
+{
+  if(m.getNumberOfColumns() != m.getNumberOfRows())
+  {
+    throw non_square_matrix_passed_to_square_matrix_constructor_exception();
+  }
+}
 
 template<typename T>
 T SquareMatrix<T>::getDeterminant() const
 {
-  if(numberOfRows == 1)
+  if(this->numberOfRows == 1)
   {
-    return content[0][0];
+    return this->content[0][0];
   }
-  else if(numberOfRows == 2)
+  else if(this->numberOfRows == 2)
   {
-    return ((content[0][0] * content[1][1]) - (content[0][1] * content[1][0]));
+    return ((this->content[0][0] * this->content[1][1]) - (this->content[0][1] * this->content[1][0]));
   }
   else
   {
     T determinant = 0;
     int alternator = -1;
-    for(int i = 0; i < numberOfColumns; i++)
+    for(int i = 0; i < this->numberOfColumns; i++)
     {
-      SquareMatrix<T> subMatrix(numberOfColumns-1) = this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
+      SquareMatrix<T> subMatrix(this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i));
       determinant += alternator * subMatrix.getDeterminant();
       alternator *= -1;
     }
     return determinant;
   }
 }
+
+template class SquareMatrix<int>;
+template class SquareMatrix<double>;
+template class SquareMatrix<float>;
+template class SquareMatrix<Rational>;

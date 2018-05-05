@@ -292,9 +292,41 @@ TEST_F(MatrixTest, testGetSubMatrix)
   {
     for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
     {
-      intMatrix[i][j] = (i*3) + j;
+      intMatrix[i][j] = (i*3) + j + 1;
     }
   }
   std::cout << intMatrix;
-  std::cout << intMatrix.getSubMatrixExcludingSpecifiedRowAndColumn(1, 1);
+  Matrix<int> subMatrix = intMatrix.getSubMatrixExcludingSpecifiedRowAndColumn(1, 1);
+  std::cout << subMatrix;
+  ASSERT_EQ(subMatrix[0][0], intMatrix[0][0]);
+  ASSERT_EQ(subMatrix[0][1], intMatrix[0][2]);
+  ASSERT_EQ(subMatrix[1][0], intMatrix[2][0]);
+  ASSERT_EQ(subMatrix[1][1], intMatrix[2][2]);
+}
+
+TEST_F(MatrixTest, testGetDeterminant)
+{
+  SquareMatrix<int> intMatrix(2);
+  for(int i = 0; i < intMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
+    {
+      intMatrix[i][j] = (i*intMatrix.getNumberOfRows()) + j + 1;
+    }
+  }
+  int intDeterminant = intMatrix.getDeterminant();
+  std::cout << "Determinant of " << intMatrix << " is " << intDeterminant << std::endl;
+  ASSERT_EQ(intDeterminant, -2);
+
+  SquareMatrix<Rational> rationalMatrix(3);
+  for(int i = 0; i < rationalMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < rationalMatrix.getNumberOfColumns(); j++)
+    {
+      rationalMatrix[i][j] = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
+    }
+  }
+  Rational rationalDeterminant = rationalMatrix.getDeterminant();
+  std::cout << "Determinant of " << rationalMatrix << " is " << rationalDeterminant << std::endl;
+  ASSERT_EQ(rationalDeterminant, 0);
 }

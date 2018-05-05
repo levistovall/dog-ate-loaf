@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "Matrix.h"
+#include "SquareMatrix.h"
 
 // The fixture for testing class Rational.
 class MatrixTest : public ::testing::Test {
