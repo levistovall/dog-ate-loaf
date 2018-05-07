@@ -307,13 +307,17 @@ TEST_F(MatrixTest, testGetSubMatrix)
 TEST_F(MatrixTest, testGetDeterminant)
 {
   SquareMatrix<int> intMatrix(2);
+  SquareMatrix<int> intMatrix2(2);
   for(int i = 0; i < intMatrix.getNumberOfRows(); i++)
   {
     for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
     {
       intMatrix[i][j] = (i*intMatrix.getNumberOfRows()) + j + 1;
+      intMatrix2[i][j] = (i*intMatrix.getNumberOfRows()) + j + 1;
     }
   }
+  SquareMatrix<int> intMatrixSum = intMatrix + intMatrix2;
+  std::cout << "Determinant of " << intMatrixSum << " is " << intMatrixSum.getDeterminant() << std::endl;
   int intDeterminant = intMatrix.getDeterminant();
   std::cout << "Determinant of " << intMatrix << " is " << intDeterminant << std::endl;
   ASSERT_EQ(intDeterminant, -2);
@@ -329,4 +333,5 @@ TEST_F(MatrixTest, testGetDeterminant)
   Rational rationalDeterminant = rationalMatrix.getDeterminant();
   std::cout << "Determinant of " << rationalMatrix << " is " << rationalDeterminant << std::endl;
   ASSERT_EQ(rationalDeterminant, 0);
+
 }

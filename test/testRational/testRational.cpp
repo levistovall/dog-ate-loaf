@@ -12,14 +12,33 @@ void RationalTest::SetUp()
 void RationalTest::TearDown()
 {}
 
+TEST_F(RationalTest, testConstructor)
+{
+  bool caughtException = false;
+  try
+  {
+    Rational r(1, 0);
+  }
+  catch(const division_by_zero_exception &e)
+  {
+    caughtException = true;
+    std::cout << e.what() << std::endl;
+  }
+  ASSERT_TRUE(caughtException);
+
+  Rational q(0, 50);
+  ASSERT_TRUE(q.getDenominator() == 1);
+
+  Rational s(4, 16);
+  ASSERT_EQ(1, s.getNumerator());
+  ASSERT_EQ(4, s.getDenominator());
+}
+
 TEST_F(RationalTest, testGetNumerator) 
 {
   Rational r(5,8);
   int n = r.getNumerator();
   EXPECT_EQ(5, n);
-  n = 11;
-  int m = r.getNumerator();
-  EXPECT_EQ(5, m);
 }
 
 TEST_F(RationalTest, testGetDenominator) 
@@ -27,9 +46,6 @@ TEST_F(RationalTest, testGetDenominator)
   Rational r(5,8);
   int n = r.getDenominator();
   EXPECT_EQ(8, n);
-  n = 11;
-  int m = r.getDenominator();
-  EXPECT_EQ(8, m);
 }
 
 TEST_F(RationalTest, testGetPrimeFac) 

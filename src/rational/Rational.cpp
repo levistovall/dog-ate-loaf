@@ -6,11 +6,16 @@ Rational::Rational(int _numerator, int _denominator)
   {
     throw division_by_zero_exception();
   }
+  else if(_numerator == 0)
+  {
+    numerator   = _numerator;
+    denominator = 1;
+  }
   else
   {
     int gcf = FactorUtil::getGcfOfIntegerPair(_numerator, _denominator);
-    this->numerator   = _numerator / gcf;
-    this->denominator = _denominator / gcf;
+    numerator   = _numerator / gcf;
+    denominator = _denominator / gcf;
   }
 }
 

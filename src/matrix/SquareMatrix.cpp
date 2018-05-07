@@ -17,11 +17,11 @@ T SquareMatrix<T>::getDeterminant() const
 {
   if(this->numberOfRows == 1)
   {
-    return this->content[0][0];
+    return this->content.at(0).at(0);
   }
   else if(this->numberOfRows == 2)
   {
-    return ((this->content[0][0] * this->content[1][1]) - (this->content[0][1] * this->content[1][0]));
+    return ((this->content.at(0).at(0) * this->content.at(1).at(1)) - (this->content.at(0).at(1) * this->content.at(1).at(0)));
   }
   else
   {
@@ -29,7 +29,7 @@ T SquareMatrix<T>::getDeterminant() const
     int alternator = -1;
     for(int i = 0; i < this->numberOfColumns; i++)
     {
-      SquareMatrix<T> subMatrix(this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i));
+      SquareMatrix<T> subMatrix = this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
       determinant += alternator * subMatrix.getDeterminant();
       alternator *= -1;
     }

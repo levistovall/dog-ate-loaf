@@ -92,7 +92,7 @@ std::string Matrix<T>::toString() const
     ss << "[";
     for(int j = 0; j < numberOfColumns; j++)
     {
-      ss << content[i][j];
+      ss << content.at(i).at(j);
       if(j < numberOfColumns-1)
       {
         ss << " ";
@@ -127,7 +127,7 @@ Matrix<T> Matrix<T>::getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx,
       {
         colToCopyIdx ++;
       }
-      subMatrix[i][j] = content[rowToCopyIdx][colToCopyIdx];
+      subMatrix[i][j] = content.at(rowToCopyIdx).at(colToCopyIdx);
       colToCopyIdx++;
     }
     rowToCopyIdx++;
