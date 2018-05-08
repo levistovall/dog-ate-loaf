@@ -1,37 +1,28 @@
 #include "Matrix.h"
 
 template<typename T>
-Matrix<T>::Matrix(int numberOfRows_, int numberOfColumns_)
+Matrix<T>::Matrix(const int numberOfRows_, const int numberOfColumns_)
 {
   numberOfRows = numberOfRows_;
   numberOfColumns = numberOfColumns_;
 
-  content.resize(numberOfRows);
-  for(auto it = content.begin(); it != content.end(); it++)
-  {
-    it->resize(numberOfColumns);
-  }
+  contentPointer = new T[numberOfRows * numberOfColumns];
 }
 
 template<typename T>
-Matrix<T>::Matrix(const Matrix<T> &m)
+Matrix<T>::Matrix(const Matrix<T> &m) : Matrix<T>(m.getNumberOfRows(), m.getNumberOfColumns())
 {
-  numberOfRows = m.getNumberOfRows();
-  numberOfColumns = m.getNumberOfColumns();
-
-  content.resize(numberOfRows);
-  for(int i = 0; i < numberOfRows; i++)
+  for(int i = 0; i < numberOfRows * numberOfColumns; i++)
   {
-    content.at(i).resize(numberOfColumns);
-    for(int j = 0; j < numberOfColumns; j++)
-    {
-      content.at(i).at(j) = m[i][j];
-    }
+    contentPointer[i] = m.at(i/numberOfRows, i%numberOfRows);
   }
 }
 
 template<typename T>
-Matrix<T>::~Matrix(){}
+Matrix<T>::~Matrix()
+{
+  delete contentPointer;
+}
 
 template<typename T>
 int Matrix<T>::getNumberOfRows() const
@@ -48,34 +39,30 @@ int Matrix<T>::getNumberOfColumns() const
 template<typename T>
 Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
 {
-  numberOfRows = m.getNumberOfRows();
-  numberOfColumns = m.getNumberOfColumns();
-  content = m.getContent();
-  return *this;
+  if((numberOfRows == m.getNumberOfRows()) and (numberOfColumns == m.getNumberOfColumns()))
+  {
+    for(int i = 0; i < numberOfRows * numberOfColumns; i++)
+    {
+      contentPointer[i] = m.at(i/numberOfRows, i%numberOfRows);
+    }
+    return *this;
+  }
+  else
+  {
+    throw invalid_matrix_assignment_exception();
+  }
 }
 
 template<typename T>
-std::vector<T> &Matrix<T>::operator[](int index)
+const T &Matrix<T>::at(int rowIdx, int columnIdx) const
 {
-  return content.at(index);
+  return contentPointer[(rowIdx * numberOfColumns) + columnIdx];
 }
 
 template<typename T>
-const std::vector<T> &Matrix<T>::operator[](int index) const
+T &Matrix<T>::at(int rowIdx, int columnIdx)
 {
-  return content.at(index);
-}
-
-template<typename T>
-std::vector<std::vector<T> > &Matrix<T>::getContent()
-{
-  return content;
-}
-
-template<typename T>
-const std::vector<std::vector<T> > &Matrix<T>::getContent() const
-{
-  return content;
+  return contentPointer[(rowIdx * numberOfColumns) + columnIdx];
 }
 
 template<typename T>
@@ -92,7 +79,7 @@ std::string Matrix<T>::toString() const
     ss << "[";
     for(int j = 0; j < numberOfColumns; j++)
     {
-      ss << content.at(i).at(j);
+      ss << this->at(i, j);
       if(j < numberOfColumns-1)
       {
         ss << " ";
@@ -127,7 +114,7 @@ Matrix<T> Matrix<T>::getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx,
       {
         colToCopyIdx ++;
       }
-      subMatrix[i][j] = content.at(rowToCopyIdx).at(colToCopyIdx);
+      subMatrix.at(i, j) = this->at(rowToCopyIdx, colToCopyIdx);
       colToCopyIdx++;
     }
     rowToCopyIdx++;

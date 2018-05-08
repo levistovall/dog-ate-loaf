@@ -17,11 +17,11 @@ T SquareMatrix<T>::getDeterminant() const
 {
   if(this->numberOfRows == 1)
   {
-    return this->content.at(0).at(0);
+    return this->at(0, 0);
   }
   else if(this->numberOfRows == 2)
   {
-    return ((this->content.at(0).at(0) * this->content.at(1).at(1)) - (this->content.at(0).at(1) * this->content.at(1).at(0)));
+    return ((this->at(0, 0) * this->at(1, 1)) - (this->at(0, 0) * this->at(1, 0)));
   }
   else
   {

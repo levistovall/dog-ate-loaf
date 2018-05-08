@@ -19,10 +19,8 @@ TEST_F(MatrixTest, testGetNumberOfRowsAndGetNumberOfRows)
   Matrix<int> mat(2,2);
   int numRows = mat.getNumberOfRows();
   EXPECT_EQ(2, numRows);
-  EXPECT_EQ(numRows, mat.getContent().size());
   int numCols = mat.getNumberOfColumns();
   EXPECT_EQ(2, numCols);
-  EXPECT_EQ(numCols, mat[0].size());
 }
 
 TEST_F(MatrixTest, testContentGetters)
@@ -31,31 +29,38 @@ TEST_F(MatrixTest, testContentGetters)
   Matrix<double> doubleMat(2,2);
   Matrix<float> floatMat(2,2);
   Matrix<Rational> ratMat(2,2);
+  std::cout << "before loop 1" << std::endl;
   for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      intMat[i][j] = (i+1) * (j+1);
-      doubleMat[i][j] = (i+1) * (j+1) + 0.0005;
-      floatMat[i][j] = (i+1) * (j+1) + 0.0005;
-      ratMat[i][j] = Rational((i+1) * (j+1), 7);
+      intMat.at(i,j) = (i+1) * (j+1);
+      doubleMat.at(i,j) = (i+1) * (j+1) + 0.0005;
+      floatMat.at(i,j) = (i+1) * (j+1) + 0.0005;
+      ratMat.at(i,j) = Rational((i+1) * (j+1), 7);
+      std::cout << "i,j : " << intMat.at(i,j) << std::endl;
     }
   }
 
+  std::cout << "before loop 2" << std::endl;
   for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(intMat[i][j], (i+1) * (j+1));
-      ASSERT_TRUE(abs(doubleMat[i][j] - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
-      ASSERT_TRUE(abs(floatMat[i][j] - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
-      ASSERT_EQ(ratMat[i][j], Rational((i+1) * (j+1), 7));
+      std::cout << "i = " << i << "; j = " << j << std::endl;
+      ASSERT_EQ(intMat.at(i,j), (i+1) * (j+1));
+      ASSERT_TRUE(abs(doubleMat.at(i,j) - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMat.at(i,j) - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_EQ(ratMat.at(i,j), Rational((i+1) * (j+1), 7));
     }
+    std::cout << "bla 1" << std::endl;
   }
+  std::cout << "bla 2" << std::endl;
 }
 
 TEST_F(MatrixTest, testScalarMultiplication)
 {
+  std::cout << "open scalar mult" << std::endl;
   const int intScalar = 3;
   const double doubleScalar = 3.02;
   const float floatScalar = 3.2;
@@ -69,10 +74,10 @@ TEST_F(MatrixTest, testScalarMultiplication)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      intMat[i][j] = (i+1) * (j+1);
-      doubleMat[i][j] = (i+1) * (j+1) + 0.0005;
-      floatMat[i][j] = (i+1) * (j+1) + 0.0005;
-      ratMat[i][j] = Rational((i+1) * (j+1), 7);
+      intMat.at(i,j) = (i+1) * (j+1);
+      doubleMat.at(i,j) = (i+1) * (j+1) + 0.0005;
+      floatMat.at(i,j) = (i+1) * (j+1) + 0.0005;
+      ratMat.at(i,j) = Rational((i+1) * (j+1), 7);
     }
   }
 
@@ -95,10 +100,10 @@ TEST_F(MatrixTest, testScalarMultiplication)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(intMat[i][j], intScalar * ((i+1) * (j+1)));
-      ASSERT_TRUE(abs(doubleMat[i][j] - (doubleScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
-      ASSERT_TRUE(abs(floatMat[i][j] - (floatScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
-      ASSERT_EQ(ratMat[i][j], rationalScalar * Rational((i+1) * (j+1), 7));
+      ASSERT_EQ(intMat.at(i,j), intScalar * ((i+1) * (j+1)));
+      ASSERT_TRUE(abs(doubleMat.at(i,j) - (doubleScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMat.at(i,j) - (floatScalar * (i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_EQ(ratMat.at(i,j), rationalScalar * Rational((i+1) * (j+1), 7));
     }
   }
 }
@@ -119,26 +124,26 @@ TEST_F(MatrixTest, testMatrixMultiplication)
   {
     for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
     {
-      intLMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
-      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+      intLMatrix.at(i,j) = (((i+1) * (j+1)) * 3) % 7;
+      intRMatrix.at(i,j) = (((i+1) * (j+1)) * 3) % 7;
 
-      doubleLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
-      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      doubleLMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
+      doubleRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      floatLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
-      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      floatLMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
+      floatRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      rationalLMatrix[i][j] = Rational(i+j+1,7);
-      rationalRMatrix[i][j] = Rational(i+j+1,7);
+      rationalLMatrix.at(i,j) = Rational(i+j+1,7);
+      rationalRMatrix.at(i,j) = Rational(i+j+1,7);
     }
   }
   std::cout << intLMatrix;
   Matrix<int> intMatrixProduct = intLMatrix * intRMatrix;
   std::cout << intMatrixProduct;
-  ASSERT_EQ(intMatrixProduct[0][0], 45);
-  ASSERT_EQ(intMatrixProduct[0][1], 48);
-  ASSERT_EQ(intMatrixProduct[1][0], 48);
-  ASSERT_EQ(intMatrixProduct[1][1], 61);
+  ASSERT_EQ(intMatrixProduct.at(0,0), 45);
+  ASSERT_EQ(intMatrixProduct.at(0,1), 48);
+  ASSERT_EQ(intMatrixProduct.at(1,0), 48);
+  ASSERT_EQ(intMatrixProduct.at(1,1), 61);
 
   std::cout << doubleLMatrix;
   Matrix<double> doubleMatrixProduct = doubleLMatrix * doubleRMatrix;
@@ -159,10 +164,10 @@ TEST_F(MatrixTest, testMatrixMultiplication)
   std::cout << rationalLMatrix;
   Matrix<Rational> rationalMatrixProduct = rationalLMatrix * rationalRMatrix;
   std::cout << rationalMatrixProduct;
-  ASSERT_EQ(rationalMatrixProduct[0][0], Rational(5,49));
-  ASSERT_EQ(rationalMatrixProduct[0][1], Rational(8,49));
-  ASSERT_EQ(rationalMatrixProduct[1][0], Rational(8,49));
-  ASSERT_EQ(rationalMatrixProduct[1][1], Rational(13,49));
+  ASSERT_EQ(rationalMatrixProduct.at(0,0), Rational(5,49));
+  ASSERT_EQ(rationalMatrixProduct.at(0,1), Rational(8,49));
+  ASSERT_EQ(rationalMatrixProduct.at(1,0), Rational(8,49));
+  ASSERT_EQ(rationalMatrixProduct.at(1,1), Rational(13,49));
 }
 
 TEST_F(MatrixTest, testMatrixAddition)
@@ -181,17 +186,17 @@ TEST_F(MatrixTest, testMatrixAddition)
   {
     for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
     {
-      intLMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
-      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+      intLMatrix.at(i,j) = (((i+1) * (j+1)) * 3) % 7;
+      intRMatrix.at(i,j) = (((i+1) * (j+1)) * 3) % 7;
 
-      doubleLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
-      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      doubleLMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
+      doubleRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      floatLMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
-      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      floatLMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
+      floatRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      rationalLMatrix[i][j] = Rational(i+j+1,7);
-      rationalRMatrix[i][j] = Rational(i+j+1,7);
+      rationalLMatrix.at(i,j) = Rational(i+j+1,7);
+      rationalRMatrix.at(i,j) = Rational(i+j+1,7);
     }
   }
   std::cout << intLMatrix;
@@ -214,13 +219,13 @@ TEST_F(MatrixTest, testMatrixAddition)
   {
     for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(intMatrixSum[i][j], 2 * ((((i+1) * (j+1)) * 3) % 7));
+      ASSERT_EQ(intMatrixSum.at(i,j), 2 * ((((i+1) * (j+1)) * 3) % 7));
 
-      ASSERT_TRUE(abs(doubleMatrixSum[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(doubleMatrixSum.at(i,j) - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
 
-      ASSERT_TRUE(abs(floatMatrixSum[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMatrixSum.at(i,j) - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
 
-      ASSERT_EQ(rationalMatrixSum[i][j], 2 * (Rational(i+j+1,7)));
+      ASSERT_EQ(rationalMatrixSum.at(i,j), 2 * (Rational(i+j+1,7)));
     }
   }
 }
@@ -241,17 +246,17 @@ TEST_F(MatrixTest, testMatrixSubtraction)
   {
     for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
     {
-      intLMatrix[i][j] = 3 * ((((i+1) * (j+1)) * 3) % 7);
-      intRMatrix[i][j] = (((i+1) * (j+1)) * 3) % 7;
+      intLMatrix.at(i,j) = 3 * ((((i+1) * (j+1)) * 3) % 7);
+      intRMatrix.at(i,j) = (((i+1) * (j+1)) * 3) % 7;
 
-      doubleLMatrix[i][j] = 3 * (((i+1.1) * (j+1.1)) * 3);
-      doubleRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      doubleLMatrix.at(i,j) = 3 * (((i+1.1) * (j+1.1)) * 3);
+      doubleRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      floatLMatrix[i][j] = 3 * (((i+1.1) * (j+1.1)) * 3);
-      floatRMatrix[i][j] = ((i+1.1) * (j+1.1)) * 3;
+      floatLMatrix.at(i,j) = 3 * (((i+1.1) * (j+1.1)) * 3);
+      floatRMatrix.at(i,j) = ((i+1.1) * (j+1.1)) * 3;
 
-      rationalLMatrix[i][j] = 3 * Rational(i+j+1,7);
-      rationalRMatrix[i][j] = Rational(i+j+1,7);
+      rationalLMatrix.at(i,j) = 3 * Rational(i+j+1,7);
+      rationalRMatrix.at(i,j) = Rational(i+j+1,7);
     }
   }
   std::cout << intLMatrix;
@@ -274,13 +279,13 @@ TEST_F(MatrixTest, testMatrixSubtraction)
   {
     for(int j = 0; j < intLMatrix.getNumberOfColumns(); j++)
     {
-      ASSERT_EQ(intMatrixDifference[i][j], 2 * ((((i+1) * (j+1)) * 3) % 7));
+      ASSERT_EQ(intMatrixDifference.at(i,j), 2 * ((((i+1) * (j+1)) * 3) % 7));
 
-      ASSERT_TRUE(abs(doubleMatrixDifference[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(doubleMatrixDifference.at(i,j) - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
 
-      ASSERT_TRUE(abs(floatMatrixDifference[i][j] - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
+      ASSERT_TRUE(abs(floatMatrixDifference.at(i,j) - (2 * (((i+1.1) * (j+1.1)) * 3))) < FLOATING_POINT_EQ_TOL_);
 
-      ASSERT_EQ(rationalMatrixDifference[i][j], 2 * (Rational(i+j+1,7)));
+      ASSERT_EQ(rationalMatrixDifference.at(i,j), 2 * (Rational(i+j+1,7)));
     }
   }
 }
@@ -292,16 +297,16 @@ TEST_F(MatrixTest, testGetSubMatrix)
   {
     for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
     {
-      intMatrix[i][j] = (i*3) + j + 1;
+      intMatrix.at(i,j) = (i*3) + j + 1;
     }
   }
   std::cout << intMatrix;
   Matrix<int> subMatrix = intMatrix.getSubMatrixExcludingSpecifiedRowAndColumn(1, 1);
   std::cout << subMatrix;
-  ASSERT_EQ(subMatrix[0][0], intMatrix[0][0]);
-  ASSERT_EQ(subMatrix[0][1], intMatrix[0][2]);
-  ASSERT_EQ(subMatrix[1][0], intMatrix[2][0]);
-  ASSERT_EQ(subMatrix[1][1], intMatrix[2][2]);
+  ASSERT_EQ(subMatrix.at(0,0), intMatrix.at(0,0));
+  ASSERT_EQ(subMatrix.at(0,1), intMatrix.at(0,2));
+  ASSERT_EQ(subMatrix.at(1,0), intMatrix.at(2,0));
+  ASSERT_EQ(subMatrix.at(1,1), intMatrix.at(2,2));
 }
 
 TEST_F(MatrixTest, testGetDeterminant)
@@ -312,8 +317,8 @@ TEST_F(MatrixTest, testGetDeterminant)
   {
     for(int j = 0; j < intMatrix.getNumberOfColumns(); j++)
     {
-      intMatrix[i][j] = (i*intMatrix.getNumberOfRows()) + j + 1;
-      intMatrix2[i][j] = (i*intMatrix.getNumberOfRows()) + j + 1;
+      intMatrix.at(i,j) = (i*intMatrix.getNumberOfRows()) + j + 1;
+      intMatrix2.at(i,j) = (i*intMatrix.getNumberOfRows()) + j + 1;
     }
   }
   SquareMatrix<int> intMatrixSum = intMatrix + intMatrix2;
@@ -327,7 +332,7 @@ TEST_F(MatrixTest, testGetDeterminant)
   {
     for(int j = 0; j < rationalMatrix.getNumberOfColumns(); j++)
     {
-      rationalMatrix[i][j] = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
+      rationalMatrix.at(i,j) = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
     }
   }
   Rational rationalDeterminant = rationalMatrix.getDeterminant();

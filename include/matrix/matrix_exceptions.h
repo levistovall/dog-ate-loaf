@@ -43,4 +43,17 @@ public:
   }
 };
 
+class invalid_matrix_assignment_exception: public std::exception
+{
+public:
+  virtual const char* what() const throw()
+  {
+    std::stringstream ss;
+    ss << "In order to assign one matrix the values another, the matrices "
+       <<  "must have equal numbers of rows and equal "
+       << "numbers of columns.";
+    return ss.str().c_str();
+  }
+};
+
 #endif

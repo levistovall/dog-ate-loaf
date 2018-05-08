@@ -13,7 +13,7 @@ template<typename T>
 class Matrix
 {
 public:
-  Matrix(int numberOfRows_, int numberOfColumns_);
+  Matrix(const int numberOfRows_, const int numberOfColumns_);
   Matrix(const Matrix &m);
   virtual ~Matrix();
 
@@ -22,17 +22,14 @@ public:
 
   Matrix<T> operator=(const Matrix &m);
 
-  const std::vector<T> &operator[](int index) const;
-  std::vector<T> &operator[](int index);
-
-  const std::vector<std::vector<T> > &getContent() const;
-  std::vector<std::vector<T> > &getContent();
+  const T &at(int rowIdx, int columnIdx) const;
+  T &at(int rowIdx, int columnIdx);
 
   std::string toString() const;
 
   Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
 protected:
-  std::vector<std::vector<T> > content;
+  T* contentPointer;
   int numberOfRows;
   int numberOfColumns;
 
@@ -53,7 +50,7 @@ auto operator*(const T1 &t1, const Matrix<T2> &a) -> Matrix<decltype(T1{} * T2{}
   {
     for(int j = 0; j < result.getNumberOfColumns(); j++)
     {
-      result[i][j] = a[i][j] * t1;
+      result.at(i, j) = a.at(i, j) * t1;
     }
   }
   return result;
@@ -75,10 +72,10 @@ auto operator*(const Matrix<T1> &a, const Matrix<T2> &b) -> Matrix<decltype(T1{}
     {
       for(int j = 0; j < b.getNumberOfColumns(); j++)
       {
-        result[i][j] = 0;
+        result.at(i, j) = 0;
         for(int k = 0; k < a.getNumberOfColumns(); k++)
         {
-          result[i][j] += a[i][k] * b[k][j];
+          result.at(i, j) += a.at(i, k) * b.at(k, j);
         }
       }
     }
@@ -100,7 +97,7 @@ auto operator+(const Matrix<T1> &a, const Matrix<T2> &b) -> Matrix<decltype(T1{}
     {
       for(int j = 0; j < result.getNumberOfColumns(); j++)
       {
-        result[i][j] = a[i][j] + b[i][j];
+        result.at(i, j) = a.at(i, j) + b.at(i, j);
       }
     }
     return result;
