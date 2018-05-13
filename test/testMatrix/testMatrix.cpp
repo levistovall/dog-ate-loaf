@@ -29,7 +29,6 @@ TEST_F(MatrixTest, testContentGetters)
   Matrix<double> doubleMat(2,2);
   Matrix<float> floatMat(2,2);
   Matrix<Rational> ratMat(2,2);
-  std::cout << "before loop 1" << std::endl;
   for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
@@ -42,25 +41,20 @@ TEST_F(MatrixTest, testContentGetters)
     }
   }
 
-  std::cout << "before loop 2" << std::endl;
   for(int i = 0; i < intMat.getNumberOfRows(); i++)
   {
     for(int j = 0; j < intMat.getNumberOfColumns(); j++)
     {
-      std::cout << "i = " << i << "; j = " << j << std::endl;
       ASSERT_EQ(intMat.at(i,j), (i+1) * (j+1));
       ASSERT_TRUE(abs(doubleMat.at(i,j) - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
       ASSERT_TRUE(abs(floatMat.at(i,j) - ((i+1) * (j+1) + 0.0005)) < FLOATING_POINT_EQ_TOL_);
       ASSERT_EQ(ratMat.at(i,j), Rational((i+1) * (j+1), 7));
     }
-    std::cout << "bla 1" << std::endl;
   }
-  std::cout << "bla 2" << std::endl;
 }
 
 TEST_F(MatrixTest, testScalarMultiplication)
 {
-  std::cout << "open scalar mult" << std::endl;
   const int intScalar = 3;
   const double doubleScalar = 3.02;
   const float floatScalar = 3.2;

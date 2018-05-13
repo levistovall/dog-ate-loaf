@@ -21,7 +21,7 @@ T SquareMatrix<T>::getDeterminant() const
   }
   else if(this->numberOfRows == 2)
   {
-    return ((this->at(0, 0) * this->at(1, 1)) - (this->at(0, 0) * this->at(1, 0)));
+    return ((this->at(0, 0) * this->at(1, 1)) - (this->at(0, 1) * this->at(1, 0)));
   }
   else
   {

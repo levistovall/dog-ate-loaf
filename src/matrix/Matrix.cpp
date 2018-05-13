@@ -21,7 +21,7 @@ Matrix<T>::Matrix(const Matrix<T> &m) : Matrix<T>(m.getNumberOfRows(), m.getNumb
 template<typename T>
 Matrix<T>::~Matrix()
 {
-  delete contentPointer;
+  delete[] contentPointer;
 }
 
 template<typename T>
@@ -43,7 +43,7 @@ Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
   {
     for(int i = 0; i < numberOfRows * numberOfColumns; i++)
     {
-      contentPointer[i] = m.at(i/numberOfRows, i%numberOfRows);
+      contentPointer[i] = m.at(i/numberOfColumns, i%numberOfColumns);
     }
     return *this;
   }
