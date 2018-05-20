@@ -6,23 +6,28 @@ Matrix<T>::Matrix(const int numberOfRows_, const int numberOfColumns_)
   numberOfRows = numberOfRows_;
   numberOfColumns = numberOfColumns_;
 
-  contentPointer = new T[numberOfRows * numberOfColumns];
+  content.resize(numberOfRows);
+  for(int i = 0; i < numberOfRows; i++)
+  {
+    content.at(i).resize(numberOfColumns);
+  }
 }
 
 template<typename T>
 Matrix<T>::Matrix(const Matrix<T> &m) : Matrix<T>(m.getNumberOfRows(), m.getNumberOfColumns())
 {
-  for(int i = 0; i < numberOfRows * numberOfColumns; i++)
+  for(int i = 0; i < numberOfRows; i++)
   {
-    contentPointer[i] = m.at(i/numberOfRows, i%numberOfRows);
+    for(int j = 0; j < numberOfColumns; j++)
+    {
+      this->at(i, j) = m.at(i, j);
+    }
   }
 }
 
 template<typename T>
 Matrix<T>::~Matrix()
-{
-  delete[] contentPointer;
-}
+{}
 
 template<typename T>
 int Matrix<T>::getNumberOfRows() const
@@ -41,9 +46,12 @@ Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
 {
   if((numberOfRows == m.getNumberOfRows()) and (numberOfColumns == m.getNumberOfColumns()))
   {
-    for(int i = 0; i < numberOfRows * numberOfColumns; i++)
+    for(int i = 0; i < numberOfRows; i++)
     {
-      contentPointer[i] = m.at(i/numberOfColumns, i%numberOfColumns);
+      for(int j = 0; j < numberOfColumns; j++)
+      {
+        this->at(i, j) = m.at(i, j);
+      }
     }
     return *this;
   }
@@ -56,13 +64,13 @@ Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
 template<typename T>
 const T &Matrix<T>::at(int rowIdx, int columnIdx) const
 {
-  return contentPointer[(rowIdx * numberOfColumns) + columnIdx];
+  return content.at(rowIdx).at(columnIdx);
 }
 
 template<typename T>
 T &Matrix<T>::at(int rowIdx, int columnIdx)
 {
-  return contentPointer[(rowIdx * numberOfColumns) + columnIdx];
+  return content.at(rowIdx).at(columnIdx);
 }
 
 template<typename T>
