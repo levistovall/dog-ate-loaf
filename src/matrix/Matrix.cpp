@@ -12,9 +12,12 @@ Matrix<T>::Matrix(const int numberOfRows_, const int numberOfColumns_)
 template<typename T>
 Matrix<T>::Matrix(const Matrix<T> &m) : Matrix<T>(m.getNumberOfRows(), m.getNumberOfColumns())
 {
-  for(int i = 0; i < numberOfRows * numberOfColumns; i++)
+  for(int i = 0; i < numberOfRows; i++)
   {
-    contentPointer[i] = m.at(i/numberOfRows, i%numberOfRows);
+    for(int j = 0; j < numberOfColumns; j++)
+    {
+      this->at(i, j) = m.at(i, j);
+    }
   }
 }
 
@@ -41,9 +44,12 @@ Matrix<T> Matrix<T>::operator=(const Matrix<T>& m)
 {
   if((numberOfRows == m.getNumberOfRows()) and (numberOfColumns == m.getNumberOfColumns()))
   {
-    for(int i = 0; i < numberOfRows * numberOfColumns; i++)
+    for(int i = 0; i < numberOfRows; i++)
     {
-      contentPointer[i] = m.at(i/numberOfColumns, i%numberOfColumns);
+      for(int j = 0; j < numberOfColumns; j++)
+      {
+        this->at(i, j) = m.at(i, j);
+      }
     }
     return *this;
   }
