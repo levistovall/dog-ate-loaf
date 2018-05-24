@@ -127,14 +127,16 @@ Rational Rational::operator/=(const int &i)
  */
 Rational operator+(const Rational &r, const Rational &q)
 {
-  int sumDenominator = 
+  /*int sumDenominator =
         FactorUtil::getLcmOfIntegerPair(r.getDenominator(),
                                             q.getDenominator());
   int balanceFactorForThisNumerator  = sumDenominator / r.getDenominator();
   int balanceFactorForOtherNumerator = sumDenominator / q.getDenominator();
   int sumNumerator = r.getNumerator() * balanceFactorForThisNumerator +
                      q.getNumerator() * balanceFactorForOtherNumerator;
-  Rational sum(sumNumerator, sumDenominator);
+  Rational sum(sumNumerator, sumDenominator);*/
+  Rational sum((r.getNumerator() * q.getDenominator()) + (q.getNumerator() * r.getDenominator()),
+               (r.getDenominator() * q.getDenominator()));
   return sum;
 }
 

@@ -66,6 +66,10 @@ std::map<int,int> FactorUtil::getPrimeFactorization(const int &n)
         pf[i]++;
       }
       greatestRemainingPossibleFactor = m / getProductFromFactors(pf);
+      if(greatestRemainingPossibleFactor < 0)
+      {
+        greatestRemainingPossibleFactor *= -1;
+      }
       if(isPrimeInteger(greatestRemainingPossibleFactor))
       {
         pf[greatestRemainingPossibleFactor] = 1;
@@ -158,13 +162,14 @@ int FactorUtil::getGcfOfIntegerPair(const int &a, const int &b)
 {
   const int* lesserInt = &a;
   const int* greaterInt = &b;
-  if(a > b)
+  if(std::abs(a) > std::abs(b))
   {
     lesserInt = &b;
     greaterInt = &a;
   }
   std::map<int,int> greaterPrimeFac = getPrimeFactorization(*greaterInt);
   std::map<int,int> lesserPrimeFac = getPrimeFactorization(*lesserInt);
+
   int gcf = 1;
   std::map<int,int>::const_iterator it;
   for(it = lesserPrimeFac.begin(); it != lesserPrimeFac.end(); it++)

@@ -329,8 +329,13 @@ TEST_F(MatrixTest, testGetDeterminant)
       rationalMatrix.at(i,j) = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
     }
   }
+  rationalMatrix.at(1, 1) = 1;
   Rational rationalDeterminant = rationalMatrix.getDeterminant();
   std::cout << "Determinant of " << rationalMatrix << " is " << rationalDeterminant << std::endl;
-  ASSERT_EQ(rationalDeterminant, 0);
+  //ASSERT_EQ(rationalDeterminant, 0);
+
+  SquareMatrix<Rational> rationalInverse = rationalMatrix.getInverse();
+  std::cout << "Inverse of " << rationalMatrix << " is " << rationalInverse << std::endl;
+  std::cout << "product: " << rationalMatrix * rationalInverse << std::endl;
 
 }
