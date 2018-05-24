@@ -12,6 +12,8 @@ public:
   SquareMatrix(const Matrix<T> &m);
 
   T getDeterminant() const;
+  SquareMatrix<T> getIdentity() const;
+  SquareMatrix<T> getInverse() const;
 };
 
 

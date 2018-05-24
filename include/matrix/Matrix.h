@@ -27,12 +27,15 @@ public:
 
   std::string toString() const;
 
+  Matrix<T> getRowReducedEchelonForm() const;
   Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
+  Matrix<T> getColumnRangeAsMatrix(int colStartIdx, int colEndIdx) const;
 protected:
-  T* contentPointer;
+  std::vector<std::vector<T> > content;
   int numberOfRows;
   int numberOfColumns;
 
+  Matrix<T> getHorizontalJointWithOther(Matrix<T> other) const;
 };
 
 template<typename T>

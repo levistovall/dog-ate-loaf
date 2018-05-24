@@ -37,6 +37,35 @@ T SquareMatrix<T>::getDeterminant() const
   }
 }
 
+template<typename T>
+SquareMatrix<T> SquareMatrix<T>::getIdentity() const
+{
+  SquareMatrix<T> identity(this->getNumberOfRows());
+  for(int i = 0; i < identity.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < identity.getNumberOfColumns(); j++)
+    {
+      if(i == j)
+      {
+        identity.at(i, j) = 1;
+      }
+      else
+      {
+        identity.at(i, j) = 0;
+      }
+    }
+  }
+  return identity;
+}
+
+template<typename T>
+SquareMatrix<T> SquareMatrix<T>::getInverse() const
+{
+  Matrix<T> thisJoinedWithIdentity = this->getHorizontalJointWithOther(this->getIdentity());
+  Matrix<T> reducedJoint = thisJoinedWithIdentity.getRowReducedEchelonForm();
+  return reducedJoint.getColumnRangeAsMatrix(this->getNumberOfRows(), 2 * this->getNumberOfRows());
+}
+
 template class SquareMatrix<int>;
 template class SquareMatrix<double>;
 template class SquareMatrix<float>;
