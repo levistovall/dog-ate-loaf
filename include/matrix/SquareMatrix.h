@@ -8,12 +8,17 @@ class SquareMatrix : public Matrix<T>
 {
 public:
   SquareMatrix(int dimension_);
-  SquareMatrix(const SquareMatrix &m);
+  SquareMatrix(const SquareMatrix<T> &m);
   SquareMatrix(const Matrix<T> &m);
 
+  Matrix<T> getCharacteristicPolynomial() const;
+  Matrix<T> getCharacteristicPolynomialHelper(const SquareMatrix<T> &lambdaPositions) const;
   T getDeterminant() const;
   SquareMatrix<T> getIdentity() const;
   SquareMatrix<T> getInverse() const;
+
+private:
+
 };
 
 

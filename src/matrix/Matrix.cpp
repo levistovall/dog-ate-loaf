@@ -104,6 +104,20 @@ std::string Matrix<T>::toString() const
 }
 
 template<typename T>
+Matrix<T> Matrix<T>::getTranspose() const
+{
+  Matrix<T> transpose(numberOfColumns, numberOfRows);
+  for(int i = 0; i < numberOfRows; i++)
+  {
+    for(int j = 0; j < numberOfColumns; j++)
+    {
+      transpose.at(j, i) = this->at(i, j);
+    }
+  }
+  return transpose;
+}
+
+template<typename T>
 Matrix<T> Matrix<T>::getRowReducedEchelonForm() const
 {
   Matrix<T> reduced(*this);
@@ -127,7 +141,6 @@ Matrix<T> Matrix<T>::getRowReducedEchelonForm() const
       }
     }
   }
-  std::cout << "getReducedRowEchelonForm: " << reduced << std::endl;
   return reduced;
 }
 
@@ -149,7 +162,6 @@ Matrix<T> Matrix<T>::getHorizontalJointWithOther(Matrix<T> other) const
         joint.at(i, j + this->getNumberOfColumns()) = other.at(i, j);
       }
     }
-    std::cout << " getHorizontalJointWithOther: " << joint << std::endl;
     return joint;
   }
   else

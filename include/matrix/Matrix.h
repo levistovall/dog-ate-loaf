@@ -27,6 +27,7 @@ public:
 
   std::string toString() const;
 
+  Matrix<T> getTranspose() const;
   Matrix<T> getRowReducedEchelonForm() const;
   Matrix<T> getSubMatrixExcludingSpecifiedRowAndColumn(int rowToNixIdx, int colToNixIdx) const;
   Matrix<T> getColumnRangeAsMatrix(int colStartIdx, int colEndIdx) const;

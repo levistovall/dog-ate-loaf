@@ -26,14 +26,74 @@ T SquareMatrix<T>::getDeterminant() const
   else
   {
     T determinant = 0;
-    int alternator = -1;
+    int alternator = 1;
     for(int i = 0; i < this->numberOfColumns; i++)
     {
       SquareMatrix<T> subMatrix = this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
-      determinant += alternator * subMatrix.getDeterminant();
+      determinant += alternator * this->at(0, i) * subMatrix.getDeterminant();
       alternator *= -1;
     }
     return determinant;
+  }
+}
+
+template<typename T>
+Matrix<T> SquareMatrix<T>::getCharacteristicPolynomial() const
+{
+  return getCharacteristicPolynomialHelper(this->getIdentity());
+}
+
+template<typename T>
+Matrix<T> SquareMatrix<T>::getCharacteristicPolynomialHelper(const SquareMatrix<T> &lambdaPositions) const
+{
+  Matrix<T> characteristicPolynomial(1, this->numberOfColumns+1);
+  characteristicPolynomial = characteristicPolynomial * 0;
+  if(this->numberOfRows == 1)
+  {
+    characteristicPolynomial.at(0, 0) = this->at(0, 0);
+    characteristicPolynomial.at(0, 1) = -1;
+    return characteristicPolynomial;
+  }
+  else if(this->numberOfRows == 2)
+  {
+    characteristicPolynomial.at(0, 0) = this->getDeterminant();
+    characteristicPolynomial.at(0, 1) = (this->at(0, 1) * lambdaPositions.at(1, 0)) +
+                                        (this->at(1, 0) * lambdaPositions.at(0, 1)) -
+                                        (this->at(0, 0) * lambdaPositions.at(1, 1)) -
+                                        (this->at(1, 1) * lambdaPositions.at(0, 0));
+    bool hasSecondDegreeTerm =
+        ((lambdaPositions.at(0, 0) * lambdaPositions.at(1, 1)) + (lambdaPositions.at(0, 1) * lambdaPositions.at(1, 0))) == 1;
+    if(hasSecondDegreeTerm)
+    {
+      characteristicPolynomial.at(0, 2) = 1;
+    }
+    else
+    {
+      characteristicPolynomial.at(0, 2) = 0;
+    }
+    return characteristicPolynomial;
+  }
+  else
+  {
+    int alternator = 1;
+    for(int i = 0; i < this->numberOfColumns; i++)
+    {
+      SquareMatrix<T> subMatrix = this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
+      SquareMatrix<T> subMatrixLambdaPositions = lambdaPositions.getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
+      Matrix<T> subMatrixCharacteristicPolynomial = subMatrix.getCharacteristicPolynomialHelper(subMatrixLambdaPositions);
+      for(int j = 0; j < subMatrixCharacteristicPolynomial.getNumberOfColumns(); j++)
+      {
+        characteristicPolynomial.at(0, j) =
+            characteristicPolynomial.at(0, j) +
+            (alternator * this->at(0, i) * subMatrixCharacteristicPolynomial.at(0, j));
+
+        characteristicPolynomial.at(0, j + 1) =
+            characteristicPolynomial.at(0, j + 1) +
+            (alternator * -1 * lambdaPositions.at(0, i) * subMatrixCharacteristicPolynomial.at(0, j));
+      }
+      alternator *= -1;
+    }
+    return characteristicPolynomial;
   }
 }
 

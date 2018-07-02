@@ -329,13 +329,59 @@ TEST_F(MatrixTest, testGetDeterminant)
       rationalMatrix.at(i,j) = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
     }
   }
+  Rational rationalDeterminant = rationalMatrix.getDeterminant();
+  std::cout << "Determinant of " << rationalMatrix << " is " << rationalDeterminant << std::endl;
+  ASSERT_EQ(rationalDeterminant, 0);
+}
+
+TEST_F(MatrixTest, testGetInverse)
+{
+  SquareMatrix<Rational> rationalMatrix(3);
+  for(int i = 0; i < rationalMatrix.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < rationalMatrix.getNumberOfColumns(); j++)
+    {
+      rationalMatrix.at(i,j) = Rational((i*rationalMatrix.getNumberOfRows()) + j + 1, 10);
+    }
+  }
   rationalMatrix.at(1, 1) = 1;
   Rational rationalDeterminant = rationalMatrix.getDeterminant();
   std::cout << "Determinant of " << rationalMatrix << " is " << rationalDeterminant << std::endl;
-  //ASSERT_EQ(rationalDeterminant, 0);
+  ASSERT_EQ(rationalDeterminant, Rational(-3, 50));
 
   SquareMatrix<Rational> rationalInverse = rationalMatrix.getInverse();
   std::cout << "Inverse of " << rationalMatrix << " is " << rationalInverse << std::endl;
-  std::cout << "product: " << rationalMatrix * rationalInverse << std::endl;
+  SquareMatrix<Rational> productOfRationalMatrixAndInverse = rationalMatrix * rationalInverse;
 
+  std::cout << "product: " << productOfRationalMatrixAndInverse << std::endl;
+  for(int i = 0; i < productOfRationalMatrixAndInverse.getNumberOfRows(); i++)
+  {
+    for(int j = 0; j < productOfRationalMatrixAndInverse.getNumberOfColumns(); j++)
+    {
+      if(i == j)
+      {
+        ASSERT_EQ(1, productOfRationalMatrixAndInverse.at(i, j));
+      }
+      else
+      {
+        ASSERT_EQ(0, productOfRationalMatrixAndInverse.at(i, j));
+      }
+    }
+  }
+}
+
+TEST_F(MatrixTest, testGetCharacteristicPolynomial)
+{
+  SquareMatrix<Rational> rationalMatrix(3);
+  rationalMatrix.at(0, 0) = 2;
+  rationalMatrix.at(0, 1) = 1;
+  rationalMatrix.at(0, 2) = 5;
+  rationalMatrix.at(1, 0) = 1;
+  rationalMatrix.at(1, 1) = 3;
+  rationalMatrix.at(1, 2) = 4;
+  rationalMatrix.at(2, 0) = 7;
+  rationalMatrix.at(2, 1) = 4;
+  rationalMatrix.at(2, 2) = 9;
+  std::cout << "Characteristic polynomial of " << rationalMatrix << " is " << rationalMatrix.getCharacteristicPolynomial() << std::endl;
+  std::cout << "and determinant " << rationalMatrix.getDeterminant() << std::endl;
 }
