@@ -38,50 +38,89 @@ T SquareMatrix<T>::getDeterminant() const
 }
 
 template<typename T>
-Matrix<T> SquareMatrix<T>::getCharacteristicPolynomial() const
+Polynomial<T> SquareMatrix<T>::getCharacteristicPolynomial() const
 {
   return getCharacteristicPolynomialHelper(this->getIdentity());
 }
 
 template<typename T>
-Matrix<T> SquareMatrix<T>::getCharacteristicPolynomialHelper(const SquareMatrix<T> &lambdaPositions) const
+Polynomial<T> SquareMatrix<T>::getCharacteristicPolynomialHelper(const SquareMatrix<T> &lambdaPositions) const
 {
-  Matrix<T> characteristicPolynomial(1, this->numberOfColumns+1);
+  std::cout << "ENTER CharPolyHelper" << std::endl;
+  //Matrix<T> characteristicPolynomial(1, this->numberOfColumns+1);
+  Polynomial<T> characteristicPolynomial;
+  std::cout << "CharPolyHelper declared charPoly" << std::endl;
   characteristicPolynomial = characteristicPolynomial * 0;
+  std::cout << "CharPolyHelper zero'd out charPoly" << std::endl;
   if(this->numberOfRows == 1)
   {
-    characteristicPolynomial.at(0, 0) = this->at(0, 0);
-    characteristicPolynomial.at(0, 1) = -1;
+    characteristicPolynomial =
+    {
+        {{}, this->at(0, 0)},
+        {{{"lambda", 1}}, (-1 * lambdaPositions.at(0, 0))}
+    };
     return characteristicPolynomial;
   }
   else if(this->numberOfRows == 2)
   {
-    characteristicPolynomial.at(0, 0) = this->getDeterminant();
-    characteristicPolynomial.at(0, 1) = (this->at(0, 1) * lambdaPositions.at(1, 0)) +
-                                        (this->at(1, 0) * lambdaPositions.at(0, 1)) -
-                                        (this->at(0, 0) * lambdaPositions.at(1, 1)) -
-                                        (this->at(1, 1) * lambdaPositions.at(0, 0));
+    std::cout << "CharPolyHelper two rows" << std::endl;
+    Polynomial<T> upperLeftPolynomial =
+        {
+            {{}, this->at(0, 0)},
+            {{{"lambda", 1}}, (-1 * lambdaPositions.at(0, 0))}
+        };
+    Polynomial<T> upperRightPolynomial =
+        {
+            {{}, this->at(0, 1)},
+            {{{"lambda", 1}}, (-1 * lambdaPositions.at(0, 1))}
+        };
+    Polynomial<T> lowerLeftPolynomial =
+        {
+            {{}, this->at(1, 0)},
+            {{{"lambda", 1}}, (-1 * lambdaPositions.at(1, 0))}
+        };
+    Polynomial<T> lowerRightPolynomial =
+        {
+            {{}, this->at(1, 1)},
+            {{{"lambda", 1}}, (-1 * lambdaPositions.at(1, 1))}
+        };
+    characteristicPolynomial = (upperLeftPolynomial * lowerRightPolynomial) -
+                               (upperRightPolynomial * lowerLeftPolynomial);
+    /*characteristicPolynomial.setCoefficientOfTermOfOrder(0, this->getDeterminant());
+    T firstOrderCoeff = (this->at(0, 1) * lambdaPositions.at(1, 0)) +
+                       (this->at(1, 0) * lambdaPositions.at(0, 1)) -
+                       (this->at(0, 0) * lambdaPositions.at(1, 1)) -
+                       (this->at(1, 1) * lambdaPositions.at(0, 0));
+    characteristicPolynomial.setCoefficientOfTermOfOrder(1, firstOrderCoeff);
     bool hasSecondDegreeTerm =
         ((lambdaPositions.at(0, 0) * lambdaPositions.at(1, 1)) + (lambdaPositions.at(0, 1) * lambdaPositions.at(1, 0))) == 1;
     if(hasSecondDegreeTerm)
     {
-      characteristicPolynomial.at(0, 2) = 1;
+      characteristicPolynomial.setCoefficientOfTermOfOrder(2, 1);
     }
     else
     {
-      characteristicPolynomial.at(0, 2) = 0;
-    }
+      characteristicPolynomial.setCoefficientOfTermOfOrder(2, 0);
+    }*/
     return characteristicPolynomial;
   }
   else
   {
+    std::cout << "CharPolyHelper over two rows" << std::endl;
     int alternator = 1;
     for(int i = 0; i < this->numberOfColumns; i++)
     {
       SquareMatrix<T> subMatrix = this->getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
       SquareMatrix<T> subMatrixLambdaPositions = lambdaPositions.getSubMatrixExcludingSpecifiedRowAndColumn(0, i);
-      Matrix<T> subMatrixCharacteristicPolynomial = subMatrix.getCharacteristicPolynomialHelper(subMatrixLambdaPositions);
-      for(int j = 0; j < subMatrixCharacteristicPolynomial.getNumberOfColumns(); j++)
+      Polynomial<T> subMatrixCharacteristicPolynomial = subMatrix.getCharacteristicPolynomialHelper(subMatrixLambdaPositions);
+      Polynomial<T> polynomialForThisColumn =
+          {
+              {{}, (this->at(0, i) * alternator)},
+              {{}, (-1 * lambdaPositions.at(0, i) * alternator)}
+          };
+      std::cout << "CharPolyHelper declared a poly" << std::endl;
+      characteristicPolynomial = characteristicPolynomial + (polynomialForThisColumn * subMatrixCharacteristicPolynomial);
+      /*for(int j = 0; j < subMatrixCharacteristicPolynomial.getNumberOfColumns(); j++)
       {
         characteristicPolynomial.at(0, j) =
             characteristicPolynomial.at(0, j) +
@@ -90,7 +129,7 @@ Matrix<T> SquareMatrix<T>::getCharacteristicPolynomialHelper(const SquareMatrix<
         characteristicPolynomial.at(0, j + 1) =
             characteristicPolynomial.at(0, j + 1) +
             (alternator * -1 * lambdaPositions.at(0, i) * subMatrixCharacteristicPolynomial.at(0, j));
-      }
+      }*/
       alternator *= -1;
     }
     return characteristicPolynomial;

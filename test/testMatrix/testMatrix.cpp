@@ -384,4 +384,19 @@ TEST_F(MatrixTest, testGetCharacteristicPolynomial)
   rationalMatrix.at(2, 2) = 9;
   std::cout << "Characteristic polynomial of " << rationalMatrix << " is " << rationalMatrix.getCharacteristicPolynomial() << std::endl;
   std::cout << "and determinant " << rationalMatrix.getDeterminant() << std::endl;
+  Polynomial<double> p =
+      {
+          {{}, -3},
+          {{{"x", 1}}, 4}
+      };
+  std::cout << p << std::endl;
+  Polynomial<double> q =
+      {
+          {{}, 2},
+          {{{"x", 1}}, 1}
+      };
+  std::cout << q << std::endl;
+  std::cout << p * q << std::endl;
+  std::cout << q * p << std::endl;
+  ASSERT_TRUE(true);
 }
