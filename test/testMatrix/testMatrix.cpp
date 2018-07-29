@@ -393,10 +393,11 @@ TEST_F(MatrixTest, testGetCharacteristicPolynomial)
   Polynomial<double> q =
       {
           {{}, 2},
-          {{{"x", 1}}, 1}
+          {{{"x", 1}}, 2}
       };
   std::cout << q << std::endl;
   std::cout << p * q << std::endl;
   std::cout << q * p << std::endl;
+  std::cout << p + q << std::endl;
   ASSERT_TRUE(true);
 }

@@ -52,52 +52,6 @@ TEST_F(FactorUtilTest, testGetPrimeFactorization)
   EXPECT_EQ(negPrimeFac[-1], 1);
 }
 
-TEST_F(FactorUtilTest, testAddPrimeFacs)
-{
-  int a = 480200;
-  std::map<int,int> factorsOfA = FactorUtil::getPrimeFactorization(a);
-
-  int b = 810;
-  std::map<int,int> factorsOfB = FactorUtil::getPrimeFactorization(b);
-
-  int c = 480200 * 810;
-  std::map<int,int> factorsOfC = FactorUtil::getPrimeFactorization(c);
-
-  std::map<int,int> factorsOfAandB = FactorUtil::addPrimeFacs(factorsOfA,
-                                                                  factorsOfB);
-
-  std::map<int,int>::iterator it;
-  for(it = factorsOfC.begin(); it != factorsOfC.end(); it++)
-  {
-    EXPECT_EQ(it->second, factorsOfAandB[it->first]);
-  }
-  EXPECT_EQ(factorsOfC.size(), factorsOfAandB.size());
-  EXPECT_EQ(480200 * 810, FactorUtil::getProductFromFactors(factorsOfAandB));
-}
-
-TEST_F(FactorUtilTest, testSubtractPrimeFacs)
-{
-  int a = 10000;
-  std::map<int,int> factorsOfA = FactorUtil::getPrimeFactorization(a);
-
-  int b = 25;
-  std::map<int,int> factorsOfB = FactorUtil::getPrimeFactorization(b);
-
-  int c = 400;
-  std::map<int,int> factorsOfC = FactorUtil::getPrimeFactorization(c);
-
-  std::map<int,int> factorsOfAminusFactorsOfB =
-      FactorUtil::subtractPrimeFacs(factorsOfA, factorsOfB);
-
-  std::map<int,int>::iterator it;
-  for(it = factorsOfC.begin(); it != factorsOfC.end(); it++)
-  {
-    EXPECT_EQ(it->second, factorsOfAminusFactorsOfB[it->first]);
-  }
-  EXPECT_EQ(factorsOfC.size(), factorsOfAminusFactorsOfB.size());
-  EXPECT_EQ(400, FactorUtil::getProductFromFactors(factorsOfAminusFactorsOfB));
-}
-
 TEST_F(FactorUtilTest, testIsIntegerPairCoprime)
 {
   EXPECT_TRUE(FactorUtil::isIntegerPairCoprime(2, 3));

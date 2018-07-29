@@ -12,7 +12,7 @@ Polynomial<T>::Polynomial(){}
 
 template<typename T>
 Polynomial<T>::Polynomial(std::initializer_list<std::pair<const std::map<std::string, T>, T>> il)
-    : std::map<std::map<std::string, T>, T, TermCompare<T> >(il, this->key_comp(), this->get_allocator())
+    : std::map<std::map<std::string, T>, T>(il, this->key_comp(), this->get_allocator())
 {
   typename Polynomial<T>::iterator it;
   for(it = this->begin(); it != this->end(); it++)
@@ -30,11 +30,9 @@ void Polynomial<T>::addTerm(const std::pair<std::map<std::string, T>, T> &term)
   if(this->count(term.first) == 0)
   {
     this->insert(term);
-    std::cout << "insert " << term.second << std::endl;
   }
   else if((this->at(term.first) + term.second) != 0)
   {
-    std::cout << "does this shit ever get called" << std::endl;
     this->at(term.first) = this->at(term.first) + term.second;
   }
   else
@@ -84,14 +82,16 @@ std::string Polynomial<T>::toString() const
     {
       ss << " + ";
     }
-    ss << it->second << "(";
-    typename std::map<std::string, T>::const_iterator it_2;
-    for(it_2 = it->first.begin(); it_2 != it->first.end(); it_2++)
-    {
 
-      ss << "(" << it_2->first << "^" << it_2->second << ")";
+    ss << it->second;
+    if((it->first).size() > 0)
+    {
+      typename std::map<std::string, T>::const_iterator it_2;
+      for(it_2 = it->first.begin(); it_2 != it->first.end(); it_2++)
+      {
+        ss << "(" << it_2->first << "^" << it_2->second << ")";
+      }
     }
-    ss << ")";
   }
 
   return ss.str();

@@ -16,6 +16,12 @@ Rational::Rational(int _numerator, int _denominator)
     int gcf = FactorUtil::getGcfOfIntegerPair(_numerator, _denominator);
     numerator   = _numerator / gcf;
     denominator = _denominator / gcf;
+
+    if(denominator < 0)
+    {
+      denominator *= -1;
+      numerator   *= -1;
+    }
   }
 }
 
@@ -45,7 +51,32 @@ std::map<int, int> Rational::getPrimeFac() const
                       FactorUtil::getPrimeFactorization(this->numerator);
   std::map<int,int> primeFacDenom = 
                       FactorUtil::getPrimeFactorization(this->denominator);
-  return FactorUtil::subtractPrimeFacs(primeFacNumer, primeFacDenom); 
+  std::map<int,int>::const_iterator it;
+  for(it = primeFacDenom.begin(); it != primeFacDenom.end(); it++)
+  {
+    /*
+     * numerator and denominator have this factor in common
+     */
+    if(primeFacNumer.count(it->first) > 0)
+    {
+      /*
+       * if numerator and denominator have this factor to the same power, it cancels
+       */
+      if(primeFacNumer[it->first] == it->second)
+      {
+        primeFacNumer.erase(it->first);
+      }
+      else
+      {
+        primeFacNumer[it->first] -= it->second;
+      }
+    }
+    else
+    {
+      primeFacNumer[it->first] = -1 * it->second;
+    }
+  }
+  return primeFacNumer;
 }
 
 std::string Rational::toString() const
@@ -354,6 +385,76 @@ bool operator!=(const Rational &r, const double &d)
 bool operator!=(const double &d, const Rational &r)
 {
   return !(r == d);
+}
+
+bool operator<(const Rational &r, const Rational &q)
+{
+  return (r.toDouble() < q.toDouble());
+}
+
+bool operator<(const Rational &r, const int &i)
+{
+  return ((r.getNumerator() / r.getDenominator()) < i);
+}
+
+bool operator<(const int &i, const Rational &r)
+{
+  return (i < (r.getNumerator() / r.getDenominator()));
+}
+
+bool operator<(const Rational &r, const float &f)
+{
+  return (r.toFloat() < f);
+}
+
+bool operator<(const float &f, const Rational &r)
+{
+  return (f < r.toFloat());
+}
+
+bool operator<(const Rational &r, const double &d)
+{
+  return (r.toDouble() < d);
+}
+
+bool operator<(const double &d, const Rational &r)
+{
+  return (d < r.toDouble());
+}
+
+bool operator>(const Rational &r, const Rational &q)
+{
+  return (r.toDouble() > q.toDouble());
+}
+
+bool operator>(const Rational &r, const int &i)
+{
+  return ((r.getNumerator() / r.getDenominator()) > i);
+}
+
+bool operator>(const int &i, const Rational &r)
+{
+  return (i > (r.getNumerator() / r.getDenominator()));
+}
+
+bool operator>(const Rational &r, const float &f)
+{
+  return (r.toFloat() > f);
+}
+
+bool operator>(const float &f, const Rational &r)
+{
+  return (f > r.toFloat());
+}
+
+bool operator>(const Rational &r, const double &d)
+{
+  return (r.toDouble() > d);
+}
+
+bool operator>(const double &d, const Rational &r)
+{
+  return (d > r.toDouble());
 }
 
 std::ostream &operator<<(std::ostream &out, const Rational &r)

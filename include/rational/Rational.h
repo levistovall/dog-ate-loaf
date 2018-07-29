@@ -94,7 +94,7 @@ bool     operator!=(const float    &f, const Rational &r);
 bool     operator!=(const Rational &r, const double   &d); 
 bool     operator!=(const double   &d, const Rational &r); 
 
-bool     operator<(const Rational &r, const Rational &q); 
+bool     operator<(const Rational &r, const Rational &q);
 bool     operator<(const Rational &r, const int      &i); 
 bool     operator<(const int      &i, const Rational &r); 
 bool     operator<(const Rational &r, const float    &f); 
