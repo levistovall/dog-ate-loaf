@@ -1,7 +1,7 @@
 #include "Matrix.h"
 
 template<typename T>
-Matrix<T>::Matrix(const int numberOfRows_, const int numberOfColumns_)
+Matrix<T>::Matrix(const int &numberOfRows_, const int &numberOfColumns_)
 {
   numberOfRows = numberOfRows_;
   numberOfColumns = numberOfColumns_;
@@ -120,7 +120,16 @@ Matrix<T> Matrix<T>::getTranspose() const
 template<typename T>
 Matrix<T> Matrix<T>::getRowReducedEchelonForm() const
 {
+  /*
+   * Start with a copy of this matrix
+   */
   Matrix<T> reduced(*this);
+
+  /*
+   * For the ith row, the value in the ith column
+   * will act as a pivot. Every value "left" of the pivot should
+   * be zero.
+   */
   for(int i = 0; i < reduced.getNumberOfRows(); i++)
   {
     T pivotReciprocal = 1 / reduced.at(i, i);
@@ -147,8 +156,17 @@ Matrix<T> Matrix<T>::getRowReducedEchelonForm() const
 template<typename T>
 Matrix<T> Matrix<T>::getHorizontalJointWithOther(Matrix<T> other) const
 {
+  /*
+   * If the other matrix doesn't have the same number of rows, it
+   * cannot be joined to this matrix.
+   */
   if(this->getNumberOfRows() == other.getNumberOfRows())
   {
+    /*
+     * The joint matrix will have the same number of rows as this matrix but
+     * a number of columns consistent with adding the number of columns of
+     * this matrix to that of other.
+     */
     Matrix<T> joint(this->getNumberOfRows(), this->getNumberOfColumns() + other.getNumberOfColumns());
     for(int i = 0; i < this->getNumberOfRows(); i++)
     {
@@ -173,25 +191,15 @@ Matrix<T> Matrix<T>::getHorizontalJointWithOther(Matrix<T> other) const
 template<typename T>
 Matrix<T> Matrix<T>::getColumnRangeAsMatrix(int colStartIdx, int colEndIdx) const
 {
-  if((colEndIdx <= this->getNumberOfColumns()) &&
-     (colStartIdx < colEndIdx) &&
-     (colStartIdx >= 0))
+  Matrix<T> columnSubset(this->getNumberOfRows(), (colEndIdx - colStartIdx));
+  for(int i = 0; i < columnSubset.getNumberOfRows(); i++)
   {
-    Matrix<T> columnSubset(this->getNumberOfRows(), (colEndIdx - colStartIdx));
-    for(int i = 0; i < columnSubset.getNumberOfRows(); i++)
+    for(int j = 0; j < columnSubset.getNumberOfColumns(); j++)
     {
-      for(int j = 0; j < columnSubset.getNumberOfColumns(); j++)
-      {
-        columnSubset.at(i, j) = this->at(i, colStartIdx + j);
-      }
+      columnSubset.at(i, j) = this->at(i, colStartIdx + j);
     }
-    std::cout << " get ColumnRangeAsMatrix: " << columnSubset << std::endl;
-    return columnSubset;
   }
-  else
-  {
-
-  }
+  return columnSubset;
 }
 
 template<typename T>

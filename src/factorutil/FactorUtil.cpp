@@ -96,6 +96,11 @@ std::map<int,int> FactorUtil::getPrimeFactorization(const int &n)
       static_cast<int>(floor(pow(static_cast<double>(m), 0.5))) + 1;
   for(int i = 2; i <= greatestRemainingPossibleFactor; i++)
   {
+    /*
+     * for each prime integer i, and add to the prime factorization
+     * a pair with key equal to i and value equal to the
+     * number of times it divides n.
+     */
     if(isPrimeInteger(i) && (m%i == 0))
     {
       pf[i] = 0;
@@ -105,11 +110,13 @@ std::map<int,int> FactorUtil::getPrimeFactorization(const int &n)
         quotient /= i;
         pf[i]++;
       }
-      greatestRemainingPossibleFactor = m / getProductFromFactors(pf);
-      if(greatestRemainingPossibleFactor < 0)
-      {
-        greatestRemainingPossibleFactor *= -1;
-      }
+
+      /*
+       * readjust the upper limit of factors in consideration
+       * based upon how many times i divided n.
+       */
+      greatestRemainingPossibleFactor = std::abs(m / getProductFromFactors(pf));
+
       if(isPrimeInteger(greatestRemainingPossibleFactor))
       {
         pf[greatestRemainingPossibleFactor] = 1;
@@ -155,7 +162,10 @@ int FactorUtil::getGcfOfIntegerPair(const int &a, const int &b)
   int m = std::abs(a);
   int n = std::abs(b);
 
-  int remainder = -1;
+  /*
+   * iteratively find the gcf.
+   */
+  int remainder;
   while(n != 0)
   {
     remainder = m % n;
@@ -170,6 +180,10 @@ int FactorUtil::getGcfOfIntegers(const std::vector<int> &v)
   std::vector<int>::const_iterator it = v.begin();
   int gcf;
 
+  /*
+   * iterate over integers in v, find greatest
+   * factor common to all of them.
+   */
   for(it = v.begin(); it != v.end(); it++)
   {
     gcf = getGcfOfIntegerPair(gcf, *it);
@@ -180,12 +194,19 @@ int FactorUtil::getGcfOfIntegers(const std::vector<int> &v)
 
 int FactorUtil::getLcmOfIntegerPair(const int &a, const int &b)
 {
+  /*
+   * The least common multiple of two integers is
+   * just the product divided by the gcf
+   */
   int gcf = getGcfOfIntegerPair(a, b);
-  return (gcf * (a / gcf) * (b / gcf));
+  return ((a * b) / gcf);
 }
 
 int FactorUtil::getLcmOfIntegers(const std::vector<int> &v)
 {
+  /*
+   * Accumulate the least common multiple
+   */
   int lcm = v.at(0);
   for(int i = 1; i < v.size(); i++)
   {

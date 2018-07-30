@@ -368,6 +368,13 @@ TEST_F(MatrixTest, testGetInverse)
       }
     }
   }
+
+  SquareMatrix<double> nonInvertible(2);
+  nonInvertible.at(0, 0) = 1;
+  nonInvertible.at(0, 1) = 1;
+  nonInvertible.at(1, 0) = 1;
+  nonInvertible.at(1, 1) = 1;
+  std::cout << nonInvertible.getInverse() << std::endl;
 }
 
 TEST_F(MatrixTest, testGetCharacteristicPolynomial)

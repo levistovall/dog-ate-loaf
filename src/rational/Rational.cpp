@@ -2,6 +2,9 @@
 
 Rational::Rational(int _numerator, int _denominator)
 {
+  /*
+   * We cannot create a rational with denominator 0.
+   */
   if(_denominator == 0)
   {
     throw division_by_zero_exception();
@@ -13,10 +16,18 @@ Rational::Rational(int _numerator, int _denominator)
   }
   else
   {
+    /*
+     * Get the numerator and denominator in simplest terms.
+     */
     int gcf = FactorUtil::getGcfOfIntegerPair(_numerator, _denominator);
     numerator   = _numerator / gcf;
     denominator = _denominator / gcf;
 
+    /*
+     * Do not store negatives for both numerator
+     * and denominator, and if only one is negative, store the factor of -1
+     * in the numerator
+     */
     if(denominator < 0)
     {
       denominator *= -1;
@@ -158,14 +169,6 @@ Rational Rational::operator/=(const int &i)
  */
 Rational operator+(const Rational &r, const Rational &q)
 {
-  /*int sumDenominator =
-        FactorUtil::getLcmOfIntegerPair(r.getDenominator(),
-                                            q.getDenominator());
-  int balanceFactorForThisNumerator  = sumDenominator / r.getDenominator();
-  int balanceFactorForOtherNumerator = sumDenominator / q.getDenominator();
-  int sumNumerator = r.getNumerator() * balanceFactorForThisNumerator +
-                     q.getNumerator() * balanceFactorForOtherNumerator;
-  Rational sum(sumNumerator, sumDenominator);*/
   Rational sum((r.getNumerator() * q.getDenominator()) + (q.getNumerator() * r.getDenominator()),
                (r.getDenominator() * q.getDenominator()));
   return sum;

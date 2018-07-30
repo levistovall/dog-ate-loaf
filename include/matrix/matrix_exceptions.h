@@ -30,6 +30,18 @@ public:
   }
 };
 
+class incompatible_matrix_horizontal_joint_exception: public std::exception
+{
+public:
+  virtual const char* what() const throw()
+  {
+    std::stringstream ss;
+    ss << "In order to get a horizontal joint of two matrices, they "
+       << "must have equal number of rows.";
+    return ss.str().c_str();
+  }
+};
+
 class non_square_matrix_passed_to_square_matrix_constructor_exception: public std::exception
 {
 public:

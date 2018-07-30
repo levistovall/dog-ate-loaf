@@ -12,20 +12,47 @@
 class Rational
 {
 public:
+  /*
+   * this constructor throws a division_by_zero_exception
+   * if the denominator is 0
+   */
   Rational(int _numerator = 1, int _denominator = 1);
   virtual ~Rational();
 
+  /*
+   * the method getNumerator returns the value of
+   * the numerator of the Rational
+   */
   int getNumerator() const;
-  int getDenominator() const;
 
+  /*
+   * the method getNumerator returns the value of
+   * the denominator of the Rational
+   */
+int getDenominator() const;
+
+  /*
+   * the method getPrimeFac returns the prime
+   * factorization of the rational as a map of keys to powers.
+   */
   std::map<int, int> getPrimeFac() const;
 
+  /*
+   * The method toString returns a std::string of the
+   * format "(n/m)" where n is the numerator and m is the
+   * denominator
+   */
   std::string toString() const;
 
   double toDouble() const;
   float  toFloat() const;
   int    toInteger() const;
 
+  /*
+   * the double tol is used to determine whether two
+   * floating point numbers are sufficiently close that
+   * they can be considered equal.
+   */
   static constexpr double tol = 1e-10;
 
   Rational operator+=(const Rational &r);
