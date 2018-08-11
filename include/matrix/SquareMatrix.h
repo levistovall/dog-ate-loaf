@@ -31,7 +31,18 @@ public:
    * has one,
    */
   SquareMatrix<T> getInverse() const;
+
+  /*
+   * the method getCharacteristicPolynomial returns the CharacteristicPolynomial
+   * of the SquareMatrix by calling getCharacteristicPolynomialHelper with the
+   * identity matrix as its argument.
+   */
   Polynomial<T> getCharacteristicPolynomial() const;
+
+  /*
+   * the method getCharacteristicPolynomialHelper returns the determinant in
+   * polynomial form of the SquareMatrix - lambda * lambdaPositions
+   */
   Polynomial<T> getCharacteristicPolynomialHelper(const SquareMatrix<T> &lambdaPositions) const;
 
 };
