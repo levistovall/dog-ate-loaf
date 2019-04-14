@@ -154,7 +154,7 @@ Polynomial<T> Polynomial<T>::evaluateWithVariableValues(std::map<std::string, T>
    * Iterate over the variable-value pairs in the argument
    */
   typename std::map<std::string, T>::iterator varIterator;
-  for(varIterator = varNameToValueMap.begin(); varIterator != varNameToValueMap.end(); varNameIter++)
+  for(varIterator = varNameToValueMap.begin(); varIterator != varNameToValueMap.end(); varIterator++)
   {
     typename Polynomial<T>::iterator termIterator;
     for(termIterator = this->begin(); termIterator != this->end(); termIterator++)
